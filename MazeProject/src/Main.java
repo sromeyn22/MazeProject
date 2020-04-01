@@ -1,19 +1,25 @@
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 public class Main {
 
     static int x;
     static int y;
     static int PathCount;
-    static Cells[][] grid = new Cells[10][10];
+    static Cells[][] grid = new Cells[20][20];
     static Commands commands = new Commands();
     static boolean[] drawingwalls = new boolean[22];
+    static JFrame frame = new JFrame("Maze");
+
+    static UserInterface ui;
 
     public static void main(String[] args){
-        //asdlfkjaslfjkl
         if(commands.type == 0 || commands.type == 1){
         } else{
             commands.type = question("What type of maze would you like? (type 0 for 2d and 1 for 3d)");
         }
-        UserInterface ui =  new GraphicInterface(grid, commands, drawingwalls);
+        ui =  new GraphicInterface(grid, commands, drawingwalls, frame);
         for (int column = 0; column < grid.length; column += 1) {
             for (int row = 0; row < grid.length; row += 1) {
                 grid[column][row] = new Cells();
@@ -23,10 +29,32 @@ public class Main {
         if(commands.type == 0){
             Run(ds, ui);
             ui.display();
-            while (true) {
-                commands.solution = question("would you like to see the solution? (type 0 for no and 1 for yes)");
-                ui.display();
-            }
+            System.out.println("If you want to see the solution press 1");
+            commands.direction = 0;
+            frame.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    System.out.println(e.getKeyCode());
+                    KEYBOI(e);
+                    if(x==grid.length-1 && y==grid.length-1){
+                        System.out.println("YOU WON!!!!!!");
+                    }
+
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+
+
+                }
+            });
+
+
         } else if (commands.type == 1){
             Run(ds, ui);
             if(commands.direction == 0){
@@ -39,21 +67,65 @@ public class Main {
                 drawingwalls = left(drawingwalls);
             }
             ui.display();
-            while (true) {
-                if(commands.direction == 0){
-                    drawingwalls = up(drawingwalls);
-                } else if(commands.direction == 1){
-                    drawingwalls = right(drawingwalls);
-                } else if(commands.direction == 2){
-                    drawingwalls = down(drawingwalls);
-                } else if(commands.direction == 3){
-                    drawingwalls = left(drawingwalls);
+            frame.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+
                 }
-                Action();
-                ui.display();
-            }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+
+
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    System.out.println(e.getKeyCode());
+                    KEYBOI(e);
+                    if(x==grid.length-1 && y==grid.length-1){
+                        System.out.println("YOU WON!!!!!!");
+                    }
+
+                }
+            });
 
         }
+    }
+
+    public static void KEYBOI(KeyEvent e) {
+
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
+            moveRight();
+
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
+            moveLeft();
+        } else if (e.getKeyCode() == KeyEvent.VK_UP ) {
+            moveForward();
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN){
+            moveBack();
+        }else if (e.getKeyCode() == KeyEvent.VK_A && commands.type == 1) {
+            turnLeft();
+        }else if (e.getKeyCode() == KeyEvent.VK_D  && commands.type == 1) {
+            turnRight();
+        } else if (e.getKeyCode() == KeyEvent.VK_1  && commands.type == 0) {
+            commands.solution = !commands.solution;
+        }
+        if(commands.direction == 0){
+            drawingwalls = up(drawingwalls);
+        } else if(commands.direction == 1){
+            drawingwalls = right(drawingwalls);
+        } else if(commands.direction == 2){
+            drawingwalls = down(drawingwalls);
+        } else if(commands.direction == 3){
+            drawingwalls = left(drawingwalls);
+        }
+        commands.xPosition = x;
+        commands.yPosition = y;
+        ui.display();
+        System.out.println("x = " + x + ", y = " + y);
+
+
     }
 
     private static boolean[] left(boolean[] walls) {
@@ -193,39 +265,21 @@ public class Main {
 
     }
 
-    public static void Action(){
-        java.util.Scanner scan = new java.util.Scanner(System.in);
-        while (true) {
-            try {
-                System.out.print("What do you want to do? (l/r/g");
-                String action = scan.nextLine();
-                if(action.equals("l")){
-                    if(commands.direction == 0){
-                        commands.direction = 3;
-                    } else{
-                        commands.direction--;
-                    }
-                }
-                if(action.equals("r")){
-                    if(commands.direction == 3){
-                        commands.direction = 0;
-                    } else{
-                        commands.direction++;
-                    }
-                }
-                if(action.equals("g")){
-                    move();
-                    System.out.print("x: "+x+" y: "+y);
-                }
-                return;
-            } catch (java.util.InputMismatchException e) {
-                System.out.println("Bad answer... try again.");
-                scan.nextLine();     // to clear the rest of the line
-            }
+    private static void turnLeft(){
+        if(commands.direction == 0){
+            commands.direction = 3;
+        } else{
+            commands.direction--;
         }
     }
-
-    private static void move() {
+    private static void turnRight(){
+            if(commands.direction == 3){
+                commands.direction = 0;
+            } else{
+                commands.direction++;
+            }
+    }
+    private static void moveForward() {
         if(commands.direction == 0 && y != 0 && !WallOnOff(0, x, y)){
             y--;
         } else if(commands.direction == 1 && x != grid.length-1 && !WallOnOff(1, x, y)){
@@ -233,6 +287,39 @@ public class Main {
         } else if(commands.direction == 2 && y != grid.length-1 && !WallOnOff(2, x, y)){
             y++;
         } else if(commands.direction == 3 && x != 0 && !WallOnOff(3, x, y)){
+            x--;
+        }
+    }
+    private static void moveLeft() {
+        if(commands.direction == 1 && y != 0 && !WallOnOff(0, x, y)){
+            y--;
+        } else if(commands.direction == 2 && x != grid.length-1 && !WallOnOff(1, x, y)){
+            x++;
+        } else if(commands.direction == 3 && y != grid.length-1 && !WallOnOff(2, x, y)){
+            y++;
+        } else if(commands.direction == 0 && x != 0 && !WallOnOff(3, x, y)){
+            x--;
+        }
+    }
+    private static void moveBack() {
+        if(commands.direction == 2 && y != 0 && !WallOnOff(0, x, y)){
+            y--;
+        } else if(commands.direction == 3 && x != grid.length-1 && !WallOnOff(1, x, y)){
+            x++;
+        } else if(commands.direction == 0 && y != grid.length-1 && !WallOnOff(2, x, y)){
+            y++;
+        } else if(commands.direction == 1 && x != 0 && !WallOnOff(3, x, y)){
+            x--;
+        }
+    }
+    private static void moveRight() {
+        if(commands.direction == 3 && y != 0 && !WallOnOff(0, x, y)){
+            y--;
+        } else if(commands.direction == 0 && x != grid.length-1 && !WallOnOff(1, x, y)){
+            x++;
+        } else if(commands.direction == 1 && y != grid.length-1 && !WallOnOff(2, x, y)){
+            y++;
+        } else if(commands.direction == 2 && x != 0 && !WallOnOff(3, x, y)){
             x--;
         }
     }
@@ -362,13 +449,18 @@ class Cells{
 
 class Commands{
     int type;
-    int solution;
+    boolean solution;
     int direction;
+    int xPosition;
+    int yPosition;
 
     public Commands(){
         direction = 2;
         type = 2;
-        solution = 0;
+        solution = false;
+        xPosition = 0;
+        xPosition = 0;
     }
+
 
 }

@@ -13,7 +13,7 @@ import java.awt.Dimension;
 public class GraphicInterface extends JPanel implements UserInterface{
 // =============================================================================
 
-    public GraphicInterface (Cells[][] grid, Commands commands, boolean[] walls) {
+    public GraphicInterface (Cells[][] grid, Commands commands, boolean[] walls, JFrame frame) {
 
         _walls = walls;
         _commands = commands;
@@ -28,7 +28,6 @@ public class GraphicInterface extends JPanel implements UserInterface{
 
 
         setPreferredSize(new Dimension(_width, _height));
-        JFrame frame = new JFrame("Maze");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(this);
         frame.pack();
@@ -52,7 +51,7 @@ public class GraphicInterface extends JPanel implements UserInterface{
             g.fillRect(0, 0, 3, _height);
 
             // Iterate over all cells
-            if(_commands.solution == 1){
+            if(_commands.solution == true){
                 for (int column = 0; column < _grid.length; column += 1) {
                     for (int row = 0; row < _grid.length; row += 1) {
 
@@ -108,6 +107,9 @@ public class GraphicInterface extends JPanel implements UserInterface{
             g.setColor(Color.BLUE);
             g.fillRect(0, 0, _boxSize, _boxSize);
             g.fillRect(_width - _boxSize, _height - _boxSize, _boxSize, _boxSize);
+            g.setColor(Color.RED);
+            g.fillRect(_commands.xPosition*_boxSize+2, _commands.yPosition*_boxSize+2, _boxSize-4, _boxSize-4);
+
 
         } else if(_commands.type == 1){
             draw3d(g);
@@ -125,7 +127,12 @@ public class GraphicInterface extends JPanel implements UserInterface{
         if(_walls[0]){
             g.setColor(Color.BLUE);
             g.fillRect(80, 260, 180, 180);
-            g.setColor(Color.white);
+            if(_commands.xPosition == (_grid.length-1) && _commands.yPosition == (_grid.length-1)){
+                g.setColor(Color.GREEN);
+            } else {
+                double ground = 255-(255)*(((double)_commands.xPosition + (double)_commands.yPosition)/(2*(double)_grid.length));
+                g.setColor( new Color(255, (int)ground, (int)ground));
+            }
             int[] xPoints = {80, 260, 200};
             int[] yPoints = {440, 440, 500};
             g.fillPolygon(xPoints, yPoints, 3);
@@ -133,12 +140,26 @@ public class GraphicInterface extends JPanel implements UserInterface{
         if(_walls[1]){
             g.setColor(Color.BLUE);
             g.fillRect(260, 260, 180, 180);
+            if(_commands.xPosition == (_grid.length-1) && _commands.yPosition == (_grid.length-1)){
+                g.setColor(Color.GREEN);
+            } else {
+                double ground = 255-(255)*(((double)_commands.xPosition + (double)_commands.yPosition)/(2*(double)_grid.length));
+                g.setColor( new Color(255, (int)ground, (int)ground));
+            }
+            int[] xPoints = {260, 200, 500, 440};
+            int[] yPoints = {440, 500, 500, 440};
+            g.fillPolygon(xPoints, yPoints, 4);
 
         }
         if(_walls[2]){
             g.setColor(Color.BLUE);
             g.fillRect(440, 260, 180, 180);
-            g.setColor(Color.white);
+            if(_commands.xPosition == (_grid.length-1) && _commands.yPosition == (_grid.length-1)){
+                g.setColor(Color.GREEN);
+            } else {
+                double ground = 255-(255)*(((double)_commands.xPosition + (double)_commands.yPosition)/(2*(double)_grid.length));
+                g.setColor( new Color(255, (int)ground, (int)ground));
+            }
             int[] xPoints = {620, 440, 500};
             int[] yPoints = {440, 440, 500};
             g.fillPolygon(xPoints, yPoints, 3);
@@ -149,7 +170,12 @@ public class GraphicInterface extends JPanel implements UserInterface{
             int[] xPoints = {0, 0, 80, 80};
             int[] yPoints = {233, 467, 440, 260};
             g.fillPolygon(xPoints, yPoints, 4);
-            g.setColor(Color.white);
+            if(_commands.xPosition == (_grid.length-1) && _commands.yPosition == (_grid.length-1)){
+                g.setColor(Color.GREEN);
+            } else {
+                double ground = 255-(255)*(((double)_commands.xPosition + (double)_commands.yPosition)/(2*(double)_grid.length));
+                g.setColor( new Color(255, (int)ground, (int)ground));
+            }
             int[] xPoints2 = {80, 200, 0, 0};
             int[] yPoints2 = {440, 500, 500, 467};
             g.fillPolygon(xPoints2, yPoints2, 4);
@@ -172,7 +198,12 @@ public class GraphicInterface extends JPanel implements UserInterface{
             int[] xPoints = {700, 700, 620, 620};
             int[] yPoints = {233, 467, 440, 260};
             g.fillPolygon(xPoints, yPoints, 4);
-            g.setColor(Color.white);
+            if(_commands.xPosition == (_grid.length-1) && _commands.yPosition == (_grid.length-1)){
+                g.setColor(Color.GREEN);
+            } else {
+                double ground = 255-(255)*(((double)_commands.xPosition + (double)_commands.yPosition)/(2*(double)_grid.length));
+                g.setColor( new Color(255, (int)ground, (int)ground));
+            }
             int[] xPoints2 = {620, 500, 700, 700};
             int[] yPoints2 = {440, 500, 500, 467};
             g.fillPolygon(xPoints2, yPoints2, 4);
@@ -283,7 +314,12 @@ public class GraphicInterface extends JPanel implements UserInterface{
     }
 
     private void floor(Graphics g) {
-        g.setColor(Color.WHITE);
+        if(_commands.xPosition == (_grid.length-1) && _commands.yPosition == (_grid.length-1)){
+            g.setColor(Color.GREEN);
+        } else {
+            double ground = 255-(255)*(((double)_commands.xPosition + (double)_commands.yPosition)/(2*(double)_grid.length));
+            g.setColor( new Color(255, (int)ground, (int)ground));
+        }
         g.fillRect(0, 0, _width, _height);
         g.setColor(Color.BLACK);
         g.drawLine(0, 700, 260, 440);
@@ -326,7 +362,7 @@ public class GraphicInterface extends JPanel implements UserInterface{
 
         // Pause for a fixed interval.
         try {
-            Thread.sleep(2);
+            Thread.sleep(0);
         } catch(InterruptedException e) {}
 
     } // triggerMove ()
@@ -344,7 +380,7 @@ public class GraphicInterface extends JPanel implements UserInterface{
     private int _height;
 
     /** The size of the boxes for each cell. */
-    private final static int _boxSize = 25;
+    private final static int _boxSize = 20;
 
     /** The delay between generations, in ms. */
     //private final static int _wait   = 100;
