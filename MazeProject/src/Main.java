@@ -8,6 +8,7 @@ public class Main {
     static boolean[] drawingwalls = new boolean[22];
 
     public static void main(String[] args){
+        //asdlfkjaslfjkl
         if(commands.type == 0 || commands.type == 1){
         } else{
             commands.type = question("What type of maze would you like? (type 0 for 2d and 1 for 3d)");
