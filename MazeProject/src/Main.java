@@ -3,7 +3,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Main {
-    // test edit by scott
 
     static int x;
     static int y;
