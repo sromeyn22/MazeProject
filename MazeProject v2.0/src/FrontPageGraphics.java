@@ -19,47 +19,131 @@ public class FrontPageGraphics {
         BufferedImage background = null;
         try {
             background = ImageIO.read(new File("maze.jpeg"));
-        } catch (IOException e){
+        } catch (IOException e) {
         }
         frame.setContentPane(new ImagePanel(background));
 
-        JButton typeOfMazeButton;
-        JButton start;
-        JButton dimensionsAdd1;
-        JButton dimensionsAdd5;
-        JButton dimensionsMinus1;
-        JButton dimensionsMinus5;
+        JLabel dimensionsLabel = new JLabel(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
+        dimensionsLabel.setForeground(Color.WHITE);
+        dimensionsLabel.setBounds(200, 300, 100, 50);
 
-        JLabel label = new JLabel();
-        label.setForeground(Color.WHITE);
-        label.setText("label test");
-        label.setBounds(100, 100, 200, 50);
-        final JTextField tf=new JTextField();
-        tf.setBounds(200,200, 150,20);
-        JButton b = new JButton("change label");
-        b.setBounds(200, 300, 200, 50);
-        JButton addButton = new JButton( new AbstractAction("add") { @Override public void actionPerformed( ActionEvent e ) {tf.setText("added"); } });
-        addButton.setBounds(200, 400, 200, 50);
-        b.addActionListener(new ActionListener() {
+        JButton typeOfMazeButton = new JButton("2D");
+        typeOfMazeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                label.setText(b.getText());
+                if (typeOfMazeButton.getText().equals("2D"))
+                    typeOfMazeButton.setText("3D");
+                else
+                    typeOfMazeButton.setText("2D");
             }
         });
-        frame.add(b);
-        frame.add(addButton);
-        frame.add(tf);
-        frame.add(label);
+        typeOfMazeButton.setBounds(700, 300, 100, 50);
+
+        JButton dimensionsAdd1 = new JButton("Add 1 to the dimensions");
+        dimensionsAdd1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dimensions++;
+                dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
+            }
+        });
+        dimensionsAdd1.setBounds(200, 200, 100, 50);
+
+        JButton dimensionsAdd5 = new JButton("Add 5 to the dimensions");
+        dimensionsAdd5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dimensions+=5;
+                dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
+            }
+        });
+        dimensionsAdd5.setBounds(200, 100, 100, 50);
+
+        JButton dimensionsMinus1 = new JButton("Subtract 1 to the dimensions");
+        dimensionsMinus1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dimensions--;
+                dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
+            }
+        });
+        dimensionsMinus1.setBounds(200, 400, 100, 50);
+
+        JButton dimensionsMinus5 = new JButton("Subtract 5 to the dimensions");
+        dimensionsMinus5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dimensions-=5;
+                dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
+            }
+        });
+        dimensionsMinus5.setBounds(200, 500, 100, 50);
+
+        JTextField keyText = new JTextField();
+        keyText.setBounds(200, 600, 100, 50);
+
+        JLabel keyLabel = new JLabel();
+        keyLabel.setForeground(Color.WHITE);
+        keyLabel.setText("Key:");
+        keyLabel.setBounds(100, 600, 100, 50);
+
+        JLabel typeOfMazeLabel = new JLabel();
+        typeOfMazeLabel.setForeground(Color.WHITE);
+        typeOfMazeLabel.setText("Choose what type of maze you want");
+        typeOfMazeLabel.setBounds(640, 250, 300, 50);
+
+        JLabel errorMessage = new JLabel();
+        errorMessage.setForeground(Color.WHITE);
+        errorMessage.setText("Error: enter a number for the key");
+        errorMessage.setBounds(160, 650, 300,50);
+        errorMessage.setVisible(false);
+
+        JButton start = new JButton("Start");
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean check = false;
+                if(typeOfMazeButton.getText().equals("2D"))
+                    typeOfMaze = 2;
+                else
+                    typeOfMaze = 3;
+
+                try {
+                    key = Integer.parseInt(keyLabel.getText());
+                    check = true;
+                } catch (NumberFormatException e2) {
+                    errorMessage.setVisible(true);
+                }
+
+                if(check){
+                    // start game
+                }
+            }
+        });
+        start.setBounds(800, 600, 100, 50);
+
+        frame.add(start);
+        frame.add(errorMessage);
+        frame.add(dimensionsAdd1);
+        frame.add(dimensionsAdd5);
+        frame.add(dimensionsMinus1);
+        frame.add(dimensionsMinus5);
+        frame.add(keyLabel);
+        frame.add(keyText);
+        frame.add(dimensionsLabel);
+        frame.add(typeOfMazeButton);
+        frame.add(typeOfMazeLabel);
         frame.setSize(1024, 768);
-        frame.setVisible(true);
     }
 }
 
 class ImagePanel extends JComponent {
     private Image image;
+
     public ImagePanel(Image image) {
         this.image = image;
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
