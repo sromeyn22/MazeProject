@@ -12,6 +12,7 @@ public class FrontPageGraphics {
     int typeOfMaze; //2 for 2D, 3 for 3D
     int key;
     JFrame frame;
+    boolean check;
 
     public FrontPageGraphics() {
         frame = new JFrame("Maze");
@@ -23,6 +24,7 @@ public class FrontPageGraphics {
         }
         frame.setContentPane(new ImagePanel(background));
 
+        dimensions = 15;
         JLabel dimensionsLabel = new JLabel(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
         dimensionsLabel.setForeground(Color.WHITE);
         dimensionsLabel.setBounds(200, 300, 100, 50);
@@ -43,17 +45,21 @@ public class FrontPageGraphics {
         dimensionsAdd1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dimensions++;
-                dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
+                if(!(dimensions == 30)) {
+                    dimensions++;
+                    dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
+                }
             }
         });
-        dimensionsAdd1.setBounds(200, 200, 100, 50);
+        dimensionsAdd1.setBounds(150, 250, 300, 50);
 
         JButton dimensionsAdd5 = new JButton("Add 5 to the dimensions");
         dimensionsAdd5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dimensions+=5;
+                if(dimensions > 30)
+                    dimensions = 30;
                 dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
             }
         });
@@ -63,8 +69,10 @@ public class FrontPageGraphics {
         dimensionsMinus1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dimensions--;
-                dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
+                if(!(dimensions == 2)) {
+                    dimensions--;
+                    dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
+                }
             }
         });
         dimensionsMinus1.setBounds(200, 400, 100, 50);
@@ -74,6 +82,8 @@ public class FrontPageGraphics {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dimensions-=5;
+                if(dimensions < 2)
+                    dimensions = 2;
                 dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
             }
         });
@@ -102,21 +112,26 @@ public class FrontPageGraphics {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean check = false;
+                check = false;
                 if(typeOfMazeButton.getText().equals("2D"))
                     typeOfMaze = 2;
                 else
                     typeOfMaze = 3;
 
                 try {
-                    key = Integer.parseInt(keyLabel.getText());
+                    key = Integer.parseInt(keyText.getText());
                     check = true;
                 } catch (NumberFormatException e2) {
                     errorMessage.setVisible(true);
                 }
 
                 if(check){
-                    // start game
+                    frame.dispose();
+//                    Maze maze = new Maze(dimensions, key);
+//                    if(typeOfMaze == 2){
+//                        GraphicInterface2D 2d = new GraphicInterface2D();
+//                    } else
+//                        GraphicInterface3D 3d = new GraphicInterface3D()
                 }
             }
         });
