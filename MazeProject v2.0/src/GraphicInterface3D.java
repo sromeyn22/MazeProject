@@ -11,6 +11,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     boolean[] displayWalls = new boolean[22];
     JFrame frame3D;
 
+
     public GraphicInterface3D(Cell[][] grid){
         mazeGrid = grid;
         direction = 0;
