@@ -8,6 +8,7 @@ public class GraphicInterface3D extends JFrame implements KeyListener {
     int direction; // 0 for north, 1 for east, 2 for south, 3 for west
     int xPosition;
     int yPosition;
+    boolean[] displayWalls = new boolean[22];
 
     public GraphicInterface3D(Cell[][] grid){
         mazeGrid = grid;
