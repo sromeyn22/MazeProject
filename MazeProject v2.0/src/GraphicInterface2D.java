@@ -97,6 +97,21 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (!mazeGrid[xPosition][yPosition].RightWall)
+                xPosition++;
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (!mazeGrid[xPosition][yPosition].LeftWall)
+                xPosition--;
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            if (!mazeGrid[xPosition][yPosition].UpWall)
+                yPosition--;
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            if (!mazeGrid[xPosition][yPosition].DownWall)
+                yPosition++;
+        } else if (e.getKeyCode() == KeyEvent.VK_1) {
+            solution = !solution;
+        }
+        repaint();
     }
 }
