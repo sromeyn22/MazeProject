@@ -22,7 +22,7 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         g.fillRect(0, 0, 3, _height);
 
         // Iterate over all cells
-        if(_commands.solution == true){
+        if(solution == true){
             for (int column = 0; column < _grid.length; column += 1) {
                 for (int row = 0; row < _grid.length; row += 1) {
 
