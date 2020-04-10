@@ -15,6 +15,7 @@ public class Main {
             if(frontPage.check)
                 break;
         }
+        System.out.println(frontPage.key);
         Maze maze = new Maze(frontPage.dimensions, frontPage.key);
         maze.createMaze();
 

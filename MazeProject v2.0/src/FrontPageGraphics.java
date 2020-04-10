@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class FrontPageGraphics {
     int dimensions;
@@ -13,6 +14,7 @@ public class FrontPageGraphics {
     int key;
     JFrame frame;
     boolean check;
+    int maxDimensions;
 
     public FrontPageGraphics() {
         frame = new JFrame("Maze");
@@ -21,13 +23,19 @@ public class FrontPageGraphics {
         try {
             background = ImageIO.read(new File("maze.jpeg"));
         } catch (IOException e) {
+            System.out.println("Error: 'maze.jpeg' background file could not be found.");
+            frame.setBackground(Color.BLACK);
         }
         frame.setContentPane(new ImagePanel(background));
 
         dimensions = 15;
-        JLabel dimensionsLabel = new JLabel(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
-        dimensionsLabel.setForeground(Color.WHITE);
-        dimensionsLabel.setBounds(200, 300, 100, 50);
+        maxDimensions = 30;
+        JLabel dimensionsLabel = new JLabel(Integer.toString(dimensions) + " x " + Integer.toString(dimensions), SwingConstants.CENTER);
+        dimensionsLabel.setForeground(Color.BLACK);
+        dimensionsLabel.setBackground(Color.WHITE);
+        dimensionsLabel.setOpaque(true);
+        dimensionsLabel.setBounds(225, 303, 70, 30);
+        dimensionsLabel.setFont(dimensionsLabel.getFont().deriveFont(dimensionsLabel.getFont().getStyle() | Font.BOLD));
 
         JButton typeOfMazeButton = new JButton("2D");
         typeOfMazeButton.addActionListener(new ActionListener() {
@@ -45,25 +53,25 @@ public class FrontPageGraphics {
         dimensionsAdd1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!(dimensions == 30)) {
+                if(!(dimensions == maxDimensions)) {
                     dimensions++;
                     dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
                 }
             }
         });
-        dimensionsAdd1.setBounds(150, 250, 300, 50);
+        dimensionsAdd1.setBounds(150, 250, 220, 40);
 
         JButton dimensionsAdd5 = new JButton("Add 5 to the dimensions");
         dimensionsAdd5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dimensions+=5;
-                if(dimensions > 30)
-                    dimensions = 30;
+                if(dimensions > maxDimensions)
+                    dimensions = maxDimensions;
                 dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
             }
         });
-        dimensionsAdd5.setBounds(200, 100, 100, 50);
+        dimensionsAdd5.setBounds(150, 200, 220, 40);
 
         JButton dimensionsMinus1 = new JButton("Subtract 1 to the dimensions");
         dimensionsMinus1.addActionListener(new ActionListener() {
@@ -75,7 +83,7 @@ public class FrontPageGraphics {
                 }
             }
         });
-        dimensionsMinus1.setBounds(200, 400, 100, 50);
+        dimensionsMinus1.setBounds(150, 350, 220, 40);
 
         JButton dimensionsMinus5 = new JButton("Subtract 5 to the dimensions");
         dimensionsMinus5.addActionListener(new ActionListener() {
@@ -87,20 +95,22 @@ public class FrontPageGraphics {
                 dimensionsLabel.setText(Integer.toString(dimensions) + " x " + Integer.toString(dimensions));
             }
         });
-        dimensionsMinus5.setBounds(200, 500, 100, 50);
+        dimensionsMinus5.setBounds(150, 400, 220, 40);
 
         JTextField keyText = new JTextField();
-        keyText.setBounds(200, 600, 100, 50);
+        keyText.setBounds(220, 600, 100, 40);
 
         JLabel keyLabel = new JLabel();
         keyLabel.setForeground(Color.WHITE);
         keyLabel.setText("Key:");
-        keyLabel.setBounds(100, 600, 100, 50);
+        keyLabel.setBounds(170, 600, 100, 40);
+        keyLabel.setFont(keyLabel.getFont().deriveFont(keyLabel.getFont().getStyle() | Font.BOLD));
 
         JLabel typeOfMazeLabel = new JLabel();
         typeOfMazeLabel.setForeground(Color.WHITE);
         typeOfMazeLabel.setText("Choose what type of maze you want");
-        typeOfMazeLabel.setBounds(640, 250, 300, 50);
+        typeOfMazeLabel.setBounds(640, 250, 250, 50);
+        typeOfMazeLabel.setFont(typeOfMazeLabel.getFont().deriveFont(typeOfMazeLabel.getFont().getStyle() | Font.BOLD));
 
         JLabel errorMessage = new JLabel();
         errorMessage.setForeground(Color.WHITE);
@@ -113,29 +123,30 @@ public class FrontPageGraphics {
             @Override
             public void actionPerformed(ActionEvent e) {
                 check = false;
-                if(typeOfMazeButton.getText().equals("2D"))
+                if (typeOfMazeButton.getText().equals("2D"))
                     typeOfMaze = 2;
                 else
                     typeOfMaze = 3;
 
-                try {
-                    key = Integer.parseInt(keyText.getText());
+                if (keyText.getText().equals("")) {
                     check = true;
-                } catch (NumberFormatException e2) {
-                    errorMessage.setVisible(true);
+                    Random rand = new Random();
+                    key = rand.nextInt(10000);
+                } else {
+                    try {
+                        key = Integer.parseInt(keyText.getText());
+                        check = true;
+                    } catch (NumberFormatException e2) {
+                        errorMessage.setVisible(true);
+                    }
                 }
 
                 if(check){
                     frame.dispose();
-//                    Maze maze = new Maze(dimensions, key);
-//                    if(typeOfMaze == 2){
-//                        GraphicInterface2D 2d = new GraphicInterface2D();
-//                    } else
-//                        GraphicInterface3D 3d = new GraphicInterface3D()
                 }
             }
         });
-        start.setBounds(800, 600, 100, 50);
+        start.setBounds(700, 600, 100, 50);
 
         frame.add(start);
         frame.add(errorMessage);
@@ -152,7 +163,7 @@ public class FrontPageGraphics {
     }
 }
 
-class ImagePanel extends JComponent {
+class ImagePanel extends JComponent { // code from https://stackoverflow.com/questions/18127581/how-do-i-display-an-image-on-a-frame-using-paintcomponent
     private Image image;
 
     public ImagePanel(Image image) {
