@@ -1,9 +1,10 @@
 import java.util.Random;
 
 public class Maze {
-    static Cell[][] mazeGrid;
+    Cell[][] mazeGrid;
     static int key;
     static Random rand;
+    static int dimensions;
     static int xPos;
     static int yPos;
     static int xStart;
@@ -11,17 +12,18 @@ public class Maze {
     static BacktrackerDS ds = new BacktrackerDS();
 
 
-    public Maze (int dimensions, int key){
-        mazeGrid = createMaze(dimensions, key);
-    }
-
-    public Cell[][] createMaze(int dimensions, int keynum) {
-        key = keynum;
+    public Maze (int _dimensions, int _key){
+        dimensions = _dimensions;
+        mazeGrid = new Cell[dimensions][dimensions];
         for (int column = 0; column < dimensions; column++) {
-            for (int row = 0; row < dimensions; row += 1) {
+            for (int row = 0; row < dimensions; row++) {
                 mazeGrid[column][row] = new Cell();
             }
         }
+        key = _key;
+    }
+
+    public void createMaze() {
         rand = new Random(key);
         xStart = rand.nextInt(dimensions);
         yStart = rand.nextInt(dimensions);
@@ -47,7 +49,7 @@ public class Maze {
                 mazeGrid[column][row].UnVisited = true;
             }
         }
-        while (x != mazeGrid.length-1 || yPos != mazeGrid.length-1){
+        while (xPos != mazeGrid.length-1 || yPos != mazeGrid.length-1){
             //ui.triggerMove();
             if (mazeGrid[xPos][yPos].UnVisited){
                 mazeGrid[xPos][yPos].UnVisited = false;
@@ -64,11 +66,10 @@ public class Maze {
             xPos = ds.returnx(xPos);
             yPos = ds.returny(yPos);
         }
-        return mazeGrid;
     }
 
     
-    private static void ChooseNeighborSolution() {
+    private void ChooseNeighborSolution() {
         if(xPos == mazeGrid.length-1 && yPos == mazeGrid.length-1){
             return;
         }
@@ -99,7 +100,7 @@ public class Maze {
 
     }
 
-    private static boolean[] getNeighborsSolution() {
+    private boolean[] getNeighborsSolution() {
         boolean a;
         boolean b;
         boolean c;
@@ -132,7 +133,7 @@ public class Maze {
         return new boolean[]{a, b, c, d};
     }
 
-    public static void ChooseNeighbor(){
+    public void ChooseNeighbor(){
 
         boolean[] arrNeighbors = getNeighbors();
         if (!arrNeighbors[0] && !arrNeighbors[1] && !arrNeighbors[2] && !arrNeighbors[3]){
@@ -171,7 +172,7 @@ public class Maze {
 
     }
 
-    public static boolean[] getNeighbors(){
+    public boolean[] getNeighbors(){
         boolean a;
         boolean b;
         boolean c;
