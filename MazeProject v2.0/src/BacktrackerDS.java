@@ -11,6 +11,9 @@ public class BacktrackerDS extends OrderedCollection{
         end = toAdd;
     }
     public void pop(){
+        if (end == null){
+            return;
+        }
         end = end.next;
 
     }

@@ -9,11 +9,11 @@ public class GraphicInterface3D extends JFrame implements KeyListener {
     int xPosition;
     int yPosition;
 
-    public GraphicInterface3D(Cell[][] grid, int dir, int x, int y){
+    public GraphicInterface3D(Cell[][] grid){
         mazeGrid = grid;
-        direction = dir;
-        xPosition = x;
-        yPosition = y;
+        direction = 0;
+        xPosition = 0;
+        yPosition = 0;
     }
 
     public boolean[] whichWallsToDraw(){
