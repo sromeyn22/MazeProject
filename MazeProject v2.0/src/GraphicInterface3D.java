@@ -3,17 +3,24 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GraphicInterface3D extends JFrame implements KeyListener {
+public class GraphicInterface3D extends JPanel implements KeyListener {
     Cell[][] mazeGrid;
     int direction; // 0 for north, 1 for east, 2 for south, 3 for west
     int xPosition;
     int yPosition;
+    boolean[] displayWalls = new boolean[22];
+    JFrame frame3D;
 
     public GraphicInterface3D(Cell[][] grid){
         mazeGrid = grid;
         direction = 0;
         xPosition = 0;
         yPosition = 0;
+        frame3D = new JFrame("2D Maze");
+        frame3D.setSize(700, 700);
+        frame3D.addKeyListener(this);
+        frame3D.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame3D.setContentPane(this);
     }
 
     public void paintComponent(Graphics g){
@@ -438,41 +445,41 @@ public class GraphicInterface3D extends JFrame implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
-            if(direction == 3 && !WallOnOff(0, x, y)){
+            if(direction == 3 && !WallOnOff(0, xPosition, yPosition)){
                 yPosition--;
-            } else if(direction == 0 && !WallOnOff(1, x, y)){
+            } else if(direction == 0 && !WallOnOff(1, xPosition, yPosition)){
                 xPosition++;
-            } else if(direction == 1 && !WallOnOff(2, x, y)){
+            } else if(direction == 1 && !WallOnOff(2, xPosition, yPosition)){
                 yPosition++;
-            } else if(direction == 2 && !WallOnOff(3, x, y)){
+            } else if(direction == 2 && !WallOnOff(3, xPosition, yPosition)){
                 xPosition--;
             }
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
-            if(direction == 1 && !WallOnOff(0, x, y)){
+            if(direction == 1 && !WallOnOff(0, xPosition, yPosition)){
                 yPosition--;
-            } else if(direction == 2 && !WallOnOff(1, x, y)){
+            } else if(direction == 2 && !WallOnOff(1, xPosition, yPosition)){
                 xPosition++;
-            } else if(direction == 3 && !WallOnOff(2, x, y)){
+            } else if(direction == 3 && !WallOnOff(2, xPosition, yPosition)){
                 yPosition++;
-            } else if(direction == 0 && !WallOnOff(3, x, y)){
+            } else if(direction == 0 && !WallOnOff(3, xPosition, yPosition)){
                 xPosition--;
             }
         } else if (e.getKeyCode() == KeyEvent.VK_UP ) {
-            if(direction == 1 && !WallOnOff(1, x, y)){
+            if(direction == 1 && !WallOnOff(1, xPosition, yPosition)){
                 xPosition++;
-            } else if(direction == 2 && !WallOnOff(2, x, y)){
+            } else if(direction == 2 && !WallOnOff(2, xPosition, yPosition)){
                 yPosition++;
-            } else if(direction == 3 && !WallOnOff(3, x, y)){
+            } else if(direction == 3 && !WallOnOff(3, xPosition, yPosition)){
                 xPosition--;
             }
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN){
-            if(direction == 2 && !WallOnOff(0, x, y)){
+            if(direction == 2 && !WallOnOff(0, xPosition, yPosition)){
                 yPosition--;
-            } else if(direction == 3 && !WallOnOff(1, x, y)){
+            } else if(direction == 3 && !WallOnOff(1, xPosition, yPosition)){
                 xPosition++;
-            } else if(direction == 0 && !WallOnOff(2, x, y)){
+            } else if(direction == 0 && !WallOnOff(2, xPosition, yPosition)){
                 yPosition++;
-            } else if(direction == 1 && !WallOnOff(3, x, y)){
+            } else if(direction == 1 && !WallOnOff(3, xPosition, yPosition)){
                 xPosition--;
             }
         }else if (e.getKeyCode() == KeyEvent.VK_A) {

@@ -15,13 +15,14 @@ public class Main {
             if(frontPage.check)
                 break;
         }
-        System.out.println(frontPage.key);
         Maze maze = new Maze(frontPage.dimensions, frontPage.key);
         maze.createMaze();
         if (frontPage.typeOfMaze == 2){
             GraphicInterface2D twoD = new GraphicInterface2D(maze.mazeGrid);
+            twoD.frame2D.setVisible(true);
         } else if (frontPage.typeOfMaze == 3){
             GraphicInterface3D threeD = new GraphicInterface3D(maze.mazeGrid);
+            threeD.frame3D.setVisible(true);
         }
 
     }

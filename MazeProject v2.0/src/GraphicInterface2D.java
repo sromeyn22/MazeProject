@@ -9,6 +9,7 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
     int xPosition;
     int yPosition;
     boolean solution;
+    JFrame frame2D;
 
     public GraphicInterface2D(Cell[][] grid) {
         mazeGrid = grid;
@@ -16,6 +17,11 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         xPosition = 0;
         yPosition = 0;
         solution = false;
+        frame2D = new JFrame("2D Maze");
+        frame2D.setSize(boxSize*mazeGrid.length, boxSize*mazeGrid.length);
+        frame2D.addKeyListener(this);
+        frame2D.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame2D.setContentPane(this);
     }
 
 
@@ -31,7 +37,7 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
 
 
         // Iterate over all cells
-        if (solution == true) {
+        if (solution) {
             for (int column = 0; column < mazeGrid.length; column += 1) {
                 for (int row = 0; row < mazeGrid.length; row += 1) {
 
