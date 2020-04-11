@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 public class GraphicInterface3D extends JPanel implements KeyListener {
     Cell[][] mazeGrid;
+    int difficulty;
     int direction; // 0 for north, 1 for east, 2 for south, 3 for west
     int xPosition;
     int yPosition;
@@ -12,12 +13,13 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     JFrame frame3D;
 
 
-    public GraphicInterface3D(Cell[][] grid){
+    public GraphicInterface3D(Cell[][] grid, int _difficulty){
         mazeGrid = grid;
-        direction = 0;
+        difficulty = _difficulty;
+        direction = 2;
         xPosition = 0;
         yPosition = 0;
-        frame3D = new JFrame("2D Maze");
+        frame3D = new JFrame("3D Maze");
         frame3D.setSize(700, 700);
         frame3D.addKeyListener(this);
         frame3D.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,6 +31,13 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         floor(g);
         mist(g);
         walls(g);
+        enemy(g);
+        g.setColor(Color.RED);
+        g.drawString(Integer.toString(difficulty), 640, 25);
+    }
+
+    public void enemy(Graphics g){
+
     }
 
     private void walls(Graphics g) {
@@ -466,7 +475,9 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                 xPosition--;
             }
         } else if (e.getKeyCode() == KeyEvent.VK_UP ) {
-            if(direction == 1 && !WallOnOff(1, xPosition, yPosition)){
+            if(direction == 0 && !WallOnOff(0, xPosition, yPosition)){
+                yPosition--;
+            } else if(direction == 1 && !WallOnOff(1, xPosition, yPosition)){
                 xPosition++;
             } else if(direction == 2 && !WallOnOff(2, xPosition, yPosition)){
                 yPosition++;
