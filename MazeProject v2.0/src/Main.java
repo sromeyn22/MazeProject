@@ -18,10 +18,10 @@ public class Main {
         Maze maze = new Maze(frontPage.dimensions, frontPage.key);
         maze.createMaze();
         if (frontPage.typeOfMaze == 2){
-            GraphicInterface2D twoD = new GraphicInterface2D(maze.mazeGrid);
+            GraphicInterface2D twoD = new GraphicInterface2D(maze.mazeGrid, maze.difficulty);
             twoD.frame2D.setVisible(true);
         } else if (frontPage.typeOfMaze == 3){
-            GraphicInterface3D threeD = new GraphicInterface3D(maze.mazeGrid);
+            GraphicInterface3D threeD = new GraphicInterface3D(maze.mazeGrid, maze.difficulty);
             threeD.frame3D.setVisible(true);
         }
 
