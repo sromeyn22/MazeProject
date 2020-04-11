@@ -2,6 +2,7 @@ import java.util.Random;
 
 public class Maze {
     Cell[][] mazeGrid;
+    int difficulty;
     static int key;
     static Random rand;
     static int dimensions;
@@ -60,12 +61,14 @@ public class Maze {
         }
         xPos = ds.returnx(xPos);
         yPos = ds.returny(yPos);
+        difficulty = ds.getLength();
         while(xPos != 0 || yPos != 0){
             mazeGrid[xPos][yPos].Path = true;
             ds.pop();
             xPos = ds.returnx(xPos);
             yPos = ds.returny(yPos);
         }
+        //for (int )
     }
 
     
@@ -81,20 +84,20 @@ public class Maze {
             return;
         }
         boolean test = false;
-        int rand = 4;
+        int random = 4;
         while (!test) {
-            rand = (int) (Math.random() * 4);
-            test = arrNeighborssol[rand];
+            random = rand.nextInt(4);
+            test = arrNeighborssol[random];
         }
 
 
-        if(rand == 0){
+        if(random == 0){
             yPos--;
-        } else if (rand == 1){
+        } else if (random == 1){
             xPos++;
-        } else if (rand == 2){
+        } else if (random == 2){
             yPos++;
-        } else if (rand == 3){
+        } else if (random == 3){
             xPos--;
         }
 
@@ -147,24 +150,24 @@ public class Maze {
         }
 
         boolean test = false;
-        int rand = 4;
+        int random = 4;
         while (!test) {
-            rand = (int) (Math.random() * 4);
-            test = arrNeighbors[rand];
+            random = rand.nextInt(4);
+            test = arrNeighbors[random];
         }
-        if(rand == 0){
+        if(random == 0){
             mazeGrid[xPos][yPos].UpWall = false;
             yPos--;
             mazeGrid[xPos][yPos].DownWall = false;
-        } else if (rand == 1){
+        } else if (random == 1){
             mazeGrid[xPos][yPos].RightWall = false;
             xPos++;
             mazeGrid[xPos][yPos].LeftWall = false;
-        } else if (rand == 2){
+        } else if (random == 2){
             mazeGrid[xPos][yPos].DownWall = false;
             yPos++;
             mazeGrid[xPos][yPos].UpWall = false;
-        } else if (rand == 3){
+        } else if (random == 3){
             mazeGrid[xPos][yPos].LeftWall = false;
             xPos--;
             mazeGrid[xPos][yPos].RightWall = false;
@@ -204,3 +207,4 @@ public class Maze {
         return new boolean[]{a, b, c, d};
     }
 }
+
