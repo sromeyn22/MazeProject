@@ -9,16 +9,18 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
     int xPosition;
     int yPosition;
     boolean solution;
+    int difficulty;
     JFrame frame2D;
 
-    public GraphicInterface2D(Cell[][] grid) {
+    public GraphicInterface2D(Cell[][] grid, int _difficulty) {
         mazeGrid = grid;
+        difficulty = _difficulty;
         boxSize = 20;
         xPosition = 0;
         yPosition = 0;
         solution = false;
         frame2D = new JFrame("2D Maze");
-        frame2D.setSize(boxSize*mazeGrid.length, boxSize*mazeGrid.length);
+        frame2D.setSize(boxSize*mazeGrid.length, boxSize*mazeGrid.length+20);
         frame2D.addKeyListener(this);
         frame2D.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame2D.setContentPane(this);
@@ -28,16 +30,16 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
     public void paintComponent(Graphics g) {
 
         g.setColor(Color.WHITE);
-        g.fillRect(0, 0, Maze.dimensions, Maze.dimensions);
+        g.fillRect(0, 0, mazeGrid.length*boxSize, mazeGrid.length*boxSize);
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, Maze.dimensions, 3);
-        g.fillRect(Maze.dimensions - 3, 0, 3, Maze.dimensions);
-        g.fillRect(0, Maze.dimensions - 3, Maze.dimensions, 3);
-        g.fillRect(0, 0, 3, Maze.dimensions);
+        g.fillRect(0, 0, mazeGrid.length*boxSize, 3);
+        g.fillRect(mazeGrid.length*boxSize - 3, 0, 3, mazeGrid.length*boxSize);
+        g.fillRect(0, mazeGrid.length*boxSize - 3, mazeGrid.length*boxSize, 3);
+        g.fillRect(0, 0, 3, mazeGrid.length*boxSize);
 
 
         // Iterate over all cells
-        if (solution) {
+        if (solution == true) {
             for (int column = 0; column < mazeGrid.length; column += 1) {
                 for (int row = 0; row < mazeGrid.length; row += 1) {
 
@@ -92,9 +94,10 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         }
         g.setColor(Color.BLUE);
         g.fillRect(0, 0, boxSize, boxSize);
-        g.fillRect(Maze.dimensions - boxSize, Maze.dimensions - boxSize, boxSize, boxSize);
+        g.fillRect(mazeGrid.length*boxSize - boxSize, mazeGrid.length*boxSize - boxSize, boxSize, boxSize);
         g.setColor(Color.RED);
         g.fillRect(xPosition * boxSize + 2, yPosition * boxSize + 2, boxSize - 4, boxSize - 4);
+        g.drawString(Integer.toString(difficulty), mazeGrid.length*boxSize - 2*boxSize, boxSize);
 
     }
 
