@@ -37,7 +37,13 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     }
 
     public void enemy(Graphics g){
-
+        if(mazeGrid[xPosition][yPosition].enemy && mazeGrid[xPosition][yPosition].life > 0){
+            g.setColor(Color.red);
+            g.fillOval(260, 260, 180, 360);
+            g.fillRect(260+18*mazeGrid[xPosition][yPosition].life, 240, 180-18*mazeGrid[xPosition][yPosition].life, 10);
+            g.setColor(Color.GREEN);
+            g.fillRect(260, 240, 18*mazeGrid[xPosition][yPosition].life, 10);
+        }
     }
 
     private void walls(Graphics g) {
@@ -449,11 +455,19 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_SPACE && mazeGrid[xPosition][yPosition].life > 0){
+            mazeGrid[xPosition][yPosition].life--;
+            repaint();
+        }
 
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(mazeGrid[xPosition][yPosition].life > 0){
+            repaint();
+            return;
+        }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
             if(direction == 3 && !WallOnOff(0, xPosition, yPosition)){
                 yPosition--;
