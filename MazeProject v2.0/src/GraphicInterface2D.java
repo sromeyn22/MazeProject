@@ -89,6 +89,10 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
                     if (mazeGrid[column][row].LeftWall) {
                         g.fillRect(initx, inity, 2, boxSize);
                     }
+                    if(mazeGrid[column][row].enemy){
+                        g.setColor(Color.cyan);
+                        g.fillOval(initx, inity, boxSize, boxSize);
+                    }
                 }
             }
         }
