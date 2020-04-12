@@ -68,7 +68,12 @@ public class Maze {
             xPos = ds.returnx(xPos);
             yPos = ds.returny(yPos);
         }
-        //for (int )
+        for (int i = 0; i < mazeGrid.length; i++){
+            int w = rand.nextInt(dimensions);
+            int z = rand.nextInt(dimensions);
+            mazeGrid[w][z].enemy = true;
+            mazeGrid[w][z].life = rand.nextInt(5)+5;
+        }
     }
 
     
@@ -207,4 +212,3 @@ public class Maze {
         return new boolean[]{a, b, c, d};
     }
 }
-
