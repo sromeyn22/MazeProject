@@ -11,6 +11,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     int yPosition;
     boolean[] displayWalls = new boolean[22];
     JFrame frame3D;
+    int life;
 
 
     public GraphicInterface3D(Cell[][] grid, int _difficulty){
@@ -19,6 +20,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         direction = 2;
         xPosition = 0;
         yPosition = 0;
+        life = 100;
         frame3D = new JFrame("3D Maze");
         frame3D.setSize(700, 700);
         frame3D.addKeyListener(this);
@@ -34,6 +36,24 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         enemy(g);
         g.setColor(Color.RED);
         g.drawString(Integer.toString(difficulty), 640, 25);
+        g.fillRect(50+life, 650, 100-life, 10);
+        g.setColor(Color.GREEN);
+        g.fillRect(50, 650, life, 10);
+        if(mazeGrid[xPosition][yPosition].enemy && mazeGrid[xPosition][yPosition].life > 0 && life > 0){
+            life = life - 5;
+            try{
+                Thread.sleep(250);
+            } catch (InterruptedException e){
+
+            }
+            repaint();
+        }
+        if(life == 0){
+            g.setColor(Color.RED);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+            g.drawString("YOU LOSE", 260, 200);
+        }
+
     }
 
     public void enemy(Graphics g){
@@ -455,81 +475,87 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_SPACE && mazeGrid[xPosition][yPosition].life > 0){
-            mazeGrid[xPosition][yPosition].life--;
-            repaint();
+        if(life > 0){
+            if(e.getKeyCode() == KeyEvent.VK_SPACE && mazeGrid[xPosition][yPosition].life > 0){
+                mazeGrid[xPosition][yPosition].life--;
+                repaint();
+            }
         }
+
 
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(mazeGrid[xPosition][yPosition].life > 0){
-            repaint();
-            return;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
-            if(direction == 3 && !WallOnOff(0, xPosition, yPosition)){
-                yPosition--;
-            } else if(direction == 0 && !WallOnOff(1, xPosition, yPosition)){
-                xPosition++;
-            } else if(direction == 1 && !WallOnOff(2, xPosition, yPosition)){
-                yPosition++;
-            } else if(direction == 2 && !WallOnOff(3, xPosition, yPosition)){
-                xPosition--;
+        if(life > 0){
+            if(mazeGrid[xPosition][yPosition].life > 0){
+                repaint();
+                return;
             }
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
-            if(direction == 1 && !WallOnOff(0, xPosition, yPosition)){
-                yPosition--;
-            } else if(direction == 2 && !WallOnOff(1, xPosition, yPosition)){
-                xPosition++;
-            } else if(direction == 3 && !WallOnOff(2, xPosition, yPosition)){
-                yPosition++;
-            } else if(direction == 0 && !WallOnOff(3, xPosition, yPosition)){
-                xPosition--;
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
+                if(direction == 3 && !WallOnOff(0, xPosition, yPosition)){
+                    yPosition--;
+                } else if(direction == 0 && !WallOnOff(1, xPosition, yPosition)){
+                    xPosition++;
+                } else if(direction == 1 && !WallOnOff(2, xPosition, yPosition)){
+                    yPosition++;
+                } else if(direction == 2 && !WallOnOff(3, xPosition, yPosition)){
+                    xPosition--;
+                }
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
+                if(direction == 1 && !WallOnOff(0, xPosition, yPosition)){
+                    yPosition--;
+                } else if(direction == 2 && !WallOnOff(1, xPosition, yPosition)){
+                    xPosition++;
+                } else if(direction == 3 && !WallOnOff(2, xPosition, yPosition)){
+                    yPosition++;
+                } else if(direction == 0 && !WallOnOff(3, xPosition, yPosition)){
+                    xPosition--;
+                }
+            } else if (e.getKeyCode() == KeyEvent.VK_UP ) {
+                if(direction == 0 && !WallOnOff(0, xPosition, yPosition)){
+                    yPosition--;
+                } else if(direction == 1 && !WallOnOff(1, xPosition, yPosition)){
+                    xPosition++;
+                } else if(direction == 2 && !WallOnOff(2, xPosition, yPosition)){
+                    yPosition++;
+                } else if(direction == 3 && !WallOnOff(3, xPosition, yPosition)){
+                    xPosition--;
+                }
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN){
+                if(direction == 2 && !WallOnOff(0, xPosition, yPosition)){
+                    yPosition--;
+                } else if(direction == 3 && !WallOnOff(1, xPosition, yPosition)){
+                    xPosition++;
+                } else if(direction == 0 && !WallOnOff(2, xPosition, yPosition)){
+                    yPosition++;
+                } else if(direction == 1 && !WallOnOff(3, xPosition, yPosition)){
+                    xPosition--;
+                }
+            }else if (e.getKeyCode() == KeyEvent.VK_A) {
+                if(direction == 0){
+                    direction = 3;
+                } else{
+                    direction--;
+                }
+            }else if (e.getKeyCode() == KeyEvent.VK_D) {
+                if(direction == 3){
+                    direction = 0;
+                } else{
+                    direction++;
+                }
             }
-        } else if (e.getKeyCode() == KeyEvent.VK_UP ) {
-            if(direction == 0 && !WallOnOff(0, xPosition, yPosition)){
-                yPosition--;
-            } else if(direction == 1 && !WallOnOff(1, xPosition, yPosition)){
-                xPosition++;
-            } else if(direction == 2 && !WallOnOff(2, xPosition, yPosition)){
-                yPosition++;
-            } else if(direction == 3 && !WallOnOff(3, xPosition, yPosition)){
-                xPosition--;
-            }
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN){
-            if(direction == 2 && !WallOnOff(0, xPosition, yPosition)){
-                yPosition--;
-            } else if(direction == 3 && !WallOnOff(1, xPosition, yPosition)){
-                xPosition++;
-            } else if(direction == 0 && !WallOnOff(2, xPosition, yPosition)){
-                yPosition++;
-            } else if(direction == 1 && !WallOnOff(3, xPosition, yPosition)){
-                xPosition--;
-            }
-        }else if (e.getKeyCode() == KeyEvent.VK_A) {
             if(direction == 0){
-                direction = 3;
-            } else{
-                direction--;
+                displayWalls = up(displayWalls);
+            } else if(direction == 1){
+                displayWalls = right(displayWalls);
+            } else if(direction == 2){
+                displayWalls = down(displayWalls);
+            } else if(direction == 3){
+                displayWalls = left(displayWalls);
             }
-        }else if (e.getKeyCode() == KeyEvent.VK_D) {
-            if(direction == 3){
-                direction = 0;
-            } else{
-                direction++;
-            }
+            repaint();
         }
-        if(direction == 0){
-            displayWalls = up(displayWalls);
-        } else if(direction == 1){
-            displayWalls = right(displayWalls);
-        } else if(direction == 2){
-            displayWalls = down(displayWalls);
-        } else if(direction == 3){
-            displayWalls = left(displayWalls);
-        }
-        repaint();
+
     }
 }
