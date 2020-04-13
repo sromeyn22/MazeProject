@@ -1,6 +1,3 @@
-A plaintext README file (“README.txt") with a detailed description of how to compile, 
-run, and use your program. Note, to compile and run, we will run:
-
 The code can be compiled and run by using:
 javac *.java
 java Main
