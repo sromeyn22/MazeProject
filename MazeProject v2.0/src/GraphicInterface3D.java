@@ -34,6 +34,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         mist(g);
         walls(g);
         enemy(g);
+        health(g);
         g.setColor(Color.RED);
         g.drawString(Integer.toString(difficulty), 640, 25);
         g.fillRect(50+life, 650, 100-life, 10);
@@ -63,6 +64,57 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillRect(260+18*mazeGrid[xPosition][yPosition].life, 240, 180-18*mazeGrid[xPosition][yPosition].life, 10);
             g.setColor(Color.GREEN);
             g.fillRect(260, 240, 18*mazeGrid[xPosition][yPosition].life, 10);
+        }
+    }
+    public void health(Graphics g){
+        if(mazeGrid[xPosition][yPosition].health){
+            Color one = new Color(0, 0, 0);
+            Color two = new Color(0, 0, 0);
+            Color three = new Color(0, 0, 0);
+            Color four = new Color(0, 0, 0);
+            if(direction == 0){
+                one = new Color(153, 255, 255);
+                two = new Color(51, 255, 255);
+                three = new Color(0, 255, 255);
+                four = new Color(102, 255, 255);
+            } else if(direction == 1){
+                one = new Color(51, 255, 255);
+                two = new Color(0, 204, 204);
+                three = new Color(0, 153, 153);
+                four = new Color(0, 255, 255);
+            } else if(direction == 2){
+                one = new Color(0, 204, 204);
+                two = new Color(51, 255, 255);
+                three = new Color(0, 255, 255);
+                four = new Color(0, 153, 153);
+            } else if(direction == 3){
+                one = new Color(51, 255, 255);
+                two = new Color(153, 255, 255);
+                three = new Color(102, 255, 255);
+                four = new Color(0, 255, 255);
+            }
+            int[] xleft = {350, 350, 270};
+            int[] yup = {350, 530, 500};
+            int[] xright = {350, 350, 430};
+            int[] ydown = {650, 530, 500};
+            g.setColor(one);
+            g.fillPolygon(xright, yup, 3);
+
+            g.setColor(two);
+            g.fillPolygon(xleft, yup, 3);
+
+            g.setColor(three);
+            g.fillPolygon(xleft, ydown, 3);
+
+            g.setColor(four);
+            g.fillPolygon(xright, ydown, 3);
+
+            mazeGrid[xPosition][yPosition].health = false;
+            if(life < 90){
+                life = life + 10;
+            } else {
+                life = 100;
+            }
         }
     }
 
