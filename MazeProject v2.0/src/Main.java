@@ -1,6 +1,3 @@
-import javax.swing.*;
-import java.rmi.UnexpectedException;
-
 public class Main {
     public static void main (String[] args){
 
@@ -8,7 +5,7 @@ public class Main {
         frontPage.frame.setVisible(true);
         while(true){
             try{
-                Thread.sleep(1000);
+                Thread.sleep(1000/60);
             } catch (InterruptedException e){
 
             }
