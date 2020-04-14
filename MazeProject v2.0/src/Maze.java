@@ -74,6 +74,13 @@ public class Maze {
             mazeGrid[w][z].enemy = true;
             mazeGrid[w][z].life = rand.nextInt(5)+5;
         }
+        for (int i = 0; i < 2*mazeGrid.length; i++){
+            int w = rand.nextInt(dimensions);
+            int z = rand.nextInt(dimensions);
+            if(!mazeGrid[w][z].enemy){
+                mazeGrid[w][z].health = true;
+            }
+        }
     }
 
     
