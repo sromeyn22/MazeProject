@@ -14,6 +14,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     JFrame frame3D;
     int life;
     int[] farcells = new int[7];
+    boolean winner;
 
 
     public GraphicInterface3D(Cell[][] grid, int _difficulty){
@@ -23,6 +24,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         xPosition = 0;
         yPosition = 0;
         life = 100;
+        winner = false;
         frame3D = new JFrame("3D Maze");
         frame3D.setSize(700, 700);
         frame3D.addKeyListener(this);
@@ -211,7 +213,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         try{
             if (mazeGrid[Xuse][Yuse].enemy && mazeGrid[Xuse][Yuse].life > 0){
                 ToReturn = -1;
-            } else if(mazeGrid[Xuse][Yuse].health && mazeGrid[Xuse][Yuse].life > 0){
+            } else if(mazeGrid[Xuse][Yuse].heart && mazeGrid[Xuse][Yuse].life > 0){
                 ToReturn = 1;
             }
         } catch(ArrayIndexOutOfBoundsException ignored){
@@ -771,6 +773,9 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                 displayWalls = left(displayWalls);
             }
             repaint();
+            if(xPosition == mazeGrid.length-1 && yPosition == mazeGrid.length-1){
+                winner = true;
+            }
         }
 
     }
