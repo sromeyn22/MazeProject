@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.*;
 
 public class GraphicInterface3D extends JPanel implements KeyListener {
     Cell[][] mazeGrid;
@@ -34,7 +35,8 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         mist(g);
         walls(g);
         enemy(g);
-        health(g);
+        compass(g);
+        heart(g);
         g.setColor(Color.RED);
         g.drawString(Integer.toString(difficulty), 640, 25);
         g.fillRect(50+life, 650, 100-life, 10);
@@ -49,23 +51,119 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             }
             repaint();
         }
+        if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0 && life > 0){
+
+            if (life < 100) { life = life + 5; }
+        }
         if(life == 0){
-            g.setColor(Color.RED);
+            g.setColor(Color.WHITE);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
             g.drawString("YOU LOSE", 260, 200);
         }
-
     }
 
-    public void enemy(Graphics g){
+  public void enemy(Graphics g){
         if(mazeGrid[xPosition][yPosition].enemy && mazeGrid[xPosition][yPosition].life > 0){
-            g.setColor(Color.red);
-            g.fillOval(260, 260, 180, 360);
-            g.fillRect(260+18*mazeGrid[xPosition][yPosition].life, 240, 180-18*mazeGrid[xPosition][yPosition].life, 10);
+            Graphics2D g2 = (Graphics2D) g;
+
+            g.setColor(Color.BLACK);
+            g.fillOval(240, 240, 220, 380);
+            int[] xPoints3 = {267, 346, 236}; //left, right, top
+            int[] yPoints3 = {378, 345, 172};
+            g2.fillPolygon(xPoints3, yPoints3, 3);
+            int[] xPoints2 = {354, 433, 464};
+            int[] yPoints2 = {345, 355, 172};
+            g2.fillPolygon(xPoints2, yPoints2, 3);
+
+            Color ears = new Color(222, 71, 141);
+            g2.setColor(ears);
+            int[] xPoints = {275, 330, 240};
+            int[] yPoints = {350, 350, 180};
+            g2.fillPolygon(xPoints, yPoints, 3);
+            int[] xPoints1 = {370, 425, 460};
+            int[] yPoints1 = {350, 350, 180};
+            g2.fillPolygon(xPoints1, yPoints1, 3);
+
+            Color body = new Color(227, 126, 5);
+            g.setColor(body);
+            g.fillOval(250, 250, 200, 360);
+
+            g.setColor(Color.WHITE);
+            g.fillOval(280, 310, 50, 50);
+            g.fillOval(372, 310, 50, 50);
+            g.setColor(Color.BLACK);
+            g.fillOval(289, 319, 32, 32);
+            g.fillOval(380, 319, 32, 32);
+            g.fillArc(275, 380, 150, 75, 0, -180);
+            g.setColor(Color.WHITE);
+            g.fillOval(310, 317, 13, 13);
+            g.fillOval(400, 317, 13, 13);
+            g2.setColor(Color.WHITE);
+            g2.fillRoundRect(315, 422, 25, 20, 15, 15);
+            g2.fillRoundRect(360, 422, 25, 20, 15, 15);
+
+            g.setColor(Color.RED);
+            g.fillRect(260 + 18 * mazeGrid[xPosition][yPosition].life, 180, 180 - 18 * mazeGrid[xPosition][yPosition].life, 10);
             g.setColor(Color.GREEN);
-            g.fillRect(260, 240, 18*mazeGrid[xPosition][yPosition].life, 10);
+            g.fillRect(260, 180, 18*mazeGrid[xPosition][yPosition].life, 10);
         }
     }
+
+    public void heart(Graphics g) {
+        if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0) {
+
+            g.setColor(Color.BLACK);
+            int[] xPoints = {265, 435, 350}; //left, right, bottom
+            int[] yPoints = {385, 385, 520};
+            g.fillPolygon(xPoints, yPoints, 3);
+            g.fillArc(265, 335, 95, 100, 0, 180);
+            g.fillArc(340, 335, 95, 100, 0, 180);
+
+            g.setColor(Color.MAGENTA);
+            int[] xPoints1 = {275, 425, 350}; //left, right, bottom
+            int[] yPoints1 = {382, 382, 500};
+            g.fillPolygon(xPoints1, yPoints1, 3);
+            g.fillArc(275, 345, 75, 75, 0, 180);
+            g.fillArc(350, 345, 75, 75, 0, 180);
+
+            g.setColor(Color.GREEN);
+            g.fillRect(280, 180, 18 * mazeGrid[xPosition][yPosition].life, 10);
+        }
+    }
+
+        public void compass(Graphics g) {
+            double finish = mazeGrid.length - 1;
+            double run = xPosition - finish;
+            double slope =  (yPosition - finish) / run;
+            double theta = Math.atan(slope);
+            double xCoor;
+
+            if (run == 0) {
+                 xCoor = 60;
+            } else {
+                 xCoor = 15 + 30 * Math.cos(theta);}
+
+            double yCoor = 15 + 30 * Math.sin(theta);
+
+            Color yellow = new Color(252, 173, 3);
+            Color blue = new Color(130, 216, 237);
+            Color red = new Color(163, 32, 11);
+
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
+                    RenderingHints.VALUE_STROKE_PURE);
+
+            g2.setColor(yellow);
+            g2.fillOval(10, 10, 100, 100);
+            g2.setColor(blue);
+            g2.fillOval(15, 15, 90, 90);
+            g2.setColor(red);
+            g2.draw(new Line2D.Double(60, 60, xCoor, yCoor));
+            g2.setColor(Color.yellow);
+            g2.fillOval(56, 56, 8, 8);
+
+        }
+
     public void health(Graphics g){
         if(mazeGrid[xPosition][yPosition].health){
             Color one = new Color(0, 0, 0);
