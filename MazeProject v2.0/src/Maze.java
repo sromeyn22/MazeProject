@@ -71,21 +71,35 @@ public class Maze {
         for (int i = 0; i < mazeGrid.length; i++){
             int w = rand.nextInt(dimensions);
             int z = rand.nextInt(dimensions);
-            int y = rand.nextInt(dimensions);
-            int p = rand.nextInt(dimensions);
-
-            while (w == y && y == p) {
-                 w = rand.nextInt(dimensions);
-                 z = rand.nextInt(dimensions);
-                 y = rand.nextInt(dimensions);
-                 p = rand.nextInt(dimensions);
-
-            }
             mazeGrid[w][z].enemy = true;
-            mazeGrid[w][z].life = rand.nextInt(5) + 5;
-            mazeGrid[y][p].heart = true;
-            mazeGrid[y][p].life = rand.nextInt(5) + 5;
+            mazeGrid[w][z].life = rand.nextInt(5)+5;
         }
+        for (int i = 0; i < 2*mazeGrid.length; i++){
+            int w = rand.nextInt(dimensions);
+            int z = rand.nextInt(dimensions);
+            if(!mazeGrid[w][z].enemy){
+                mazeGrid[w][z].heart = true;
+                mazeGrid[w][z].life = rand.nextInt(5)+5;
+            }
+        }
+//         for (int i = 0; i < mazeGrid.length; i++){
+//             int w = rand.nextInt(dimensions);
+//             int z = rand.nextInt(dimensions);
+//             int y = rand.nextInt(dimensions);
+//             int p = rand.nextInt(dimensions);
+
+//             while (w == y && y == p) {
+//                  w = rand.nextInt(dimensions);
+//                  z = rand.nextInt(dimensions);
+//                  y = rand.nextInt(dimensions);
+//                  p = rand.nextInt(dimensions);
+
+//             }
+//             mazeGrid[w][z].enemy = true;
+//             mazeGrid[w][z].life = rand.nextInt(5) + 5;
+//             mazeGrid[y][p].heart = true;
+//             mazeGrid[y][p].life = rand.nextInt(5) + 5;
+//         }
     }
 
 
