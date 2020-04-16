@@ -6,8 +6,8 @@ class Cell{
     boolean DownWall;
     boolean LeftWall;
     boolean enemy;
+    boolean heart;
     int life;
-    boolean health;
 
     public Cell(){
         Path = false;
@@ -17,8 +17,7 @@ class Cell{
         DownWall = true;
         LeftWall = true;
         enemy = false;
+        heart = false;
         life = 0;
-        health = false;
     }
-
 }
