@@ -13,6 +13,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     boolean[] displayWalls = new boolean[22];
     JFrame frame3D;
     int life;
+    int[] farcells = new int[7];
 
 
     public GraphicInterface3D(Cell[][] grid, int _difficulty){
@@ -111,61 +112,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     public void heart(Graphics g) {
         if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0) {
-
-            g.setColor(Color.BLACK);
-            int[] xPoints = {265, 435, 350}; //left, right, bottom
-            int[] yPoints = {385, 385, 520};
-            g.fillPolygon(xPoints, yPoints, 3);
-            g.fillArc(265, 335, 95, 100, 0, 180);
-            g.fillArc(340, 335, 95, 100, 0, 180);
-
-            g.setColor(Color.MAGENTA);
-            int[] xPoints1 = {275, 425, 350}; //left, right, bottom
-            int[] yPoints1 = {382, 382, 500};
-            g.fillPolygon(xPoints1, yPoints1, 3);
-            g.fillArc(275, 345, 75, 75, 0, 180);
-            g.fillArc(350, 345, 75, 75, 0, 180);
-
-            g.setColor(Color.GREEN);
-            g.fillRect(280, 180, 18 * mazeGrid[xPosition][yPosition].life, 10);
-        }
-    }
-
-        public void compass(Graphics g) {
-            double finish = mazeGrid.length - 1;
-            double run = xPosition - finish;
-            double slope =  (yPosition - finish) / run;
-            double theta = Math.atan(slope);
-            double xCoor;
-
-            if (run == 0) {
-                 xCoor = 60;
-            } else {
-                 xCoor = 15 + 30 * Math.cos(theta);}
-
-            double yCoor = 15 + 30 * Math.sin(theta);
-
-            Color yellow = new Color(252, 173, 3);
-            Color blue = new Color(130, 216, 237);
-            Color red = new Color(163, 32, 11);
-
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
-                    RenderingHints.VALUE_STROKE_PURE);
-
-            g2.setColor(yellow);
-            g2.fillOval(10, 10, 100, 100);
-            g2.setColor(blue);
-            g2.fillOval(15, 15, 90, 90);
-            g2.setColor(red);
-            g2.draw(new Line2D.Double(60, 60, xCoor, yCoor));
-            g2.setColor(Color.yellow);
-            g2.fillOval(56, 56, 8, 8);
-
-        }
-
-    public void health(Graphics g){
-        if(mazeGrid[xPosition][yPosition].health){
+            
             Color one = new Color(0, 0, 0);
             Color two = new Color(0, 0, 0);
             Color three = new Color(0, 0, 0);
@@ -207,13 +154,69 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.setColor(four);
             g.fillPolygon(xright, ydown, 3);
 
-            mazeGrid[xPosition][yPosition].health = false;
-            if(life < 90){
-                life = life + 10;
-            } else {
-                life = 100;
-            }
+//             g.setColor(Color.BLACK);
+//             int[] xPoints = {265, 435, 350}; //left, right, bottom
+//             int[] yPoints = {385, 385, 520};
+//             g.fillPolygon(xPoints, yPoints, 3);
+//             g.fillArc(265, 335, 95, 100, 0, 180);
+//             g.fillArc(340, 335, 95, 100, 0, 180);
+
+//             g.setColor(Color.MAGENTA);
+//             int[] xPoints1 = {275, 425, 350}; //left, right, bottom
+//             int[] yPoints1 = {382, 382, 500};
+//             g.fillPolygon(xPoints1, yPoints1, 3);
+//             g.fillArc(275, 345, 75, 75, 0, 180);
+//             g.fillArc(350, 345, 75, 75, 0, 180);
+
+            g.setColor(Color.GREEN);
+            g.fillRect(280, 180, 18 * mazeGrid[xPosition][yPosition].life, 10);
         }
+    }
+
+        public void compass(Graphics g) {
+            double finish = mazeGrid.length - 1;
+            double run = xPosition - finish;
+            double slope =  (yPosition - finish) / run;
+            double theta = Math.atan(slope);
+            double xCoor;
+
+            if (run == 0) {
+                 xCoor = 60;
+            } else {
+                 xCoor = 15 + 30 * Math.cos(theta);}
+
+            double yCoor = 15 + 30 * Math.sin(theta);
+
+            Color yellow = new Color(252, 173, 3);
+            Color blue = new Color(130, 216, 237);
+            Color red = new Color(163, 32, 11);
+
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
+                    RenderingHints.VALUE_STROKE_PURE);
+
+            g2.setColor(yellow);
+            g2.fillOval(10, 10, 100, 100);
+            g2.setColor(blue);
+            g2.fillOval(15, 15, 90, 90);
+            g2.setColor(red);
+            g2.draw(new Line2D.Double(60, 60, xCoor, yCoor));
+            g2.setColor(Color.yellow);
+            g2.fillOval(56, 56, 8, 8);
+
+        }
+    
+    private int EnemyorHealth(int Xuse, int Yuse){
+        int ToReturn = 0;
+        try{
+            if (mazeGrid[Xuse][Yuse].enemy && mazeGrid[Xuse][Yuse].life > 0){
+                ToReturn = -1;
+            } else if(mazeGrid[Xuse][Yuse].health && mazeGrid[Xuse][Yuse].life > 0){
+                ToReturn = 1;
+            }
+        } catch(ArrayIndexOutOfBoundsException ignored){
+        }
+        return ToReturn;
     }
 
     private void walls(Graphics g) {
@@ -230,6 +233,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             int[] yPoints = {440, 440, 500};
             g.fillPolygon(xPoints, yPoints, 3);
         }
+        if(farcells[0] == 1){
+            //draw health
+        } else if (farcells[0] == -1){
+            //draw enemy
+        }
         if(displayWalls[1]){
             g.setColor(backWalls());
             g.fillRect(260, 260, 180, 180);
@@ -244,6 +252,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillPolygon(xPoints, yPoints, 4);
 
         }
+        if(farcells[1] == 1){
+            //draw health
+        } else if (farcells[1] == -1){
+            //draw enemy
+        }
         if(displayWalls[2]){
             g.setColor(backWalls());
             g.fillRect(440, 260, 180, 180);
@@ -257,6 +270,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             int[] yPoints = {440, 440, 500};
             g.fillPolygon(xPoints, yPoints, 3);
 
+        }
+        if(farcells[2] == 1){
+            //draw health
+        } else if (farcells[2] == -1){
+            //draw enemy
         }
         if(displayWalls[3]){
             g.setColor(leftWalls());
@@ -307,17 +325,32 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillRect(0, 200, 200, 300);
 
         }
+        if(farcells[3] == 1){
+            //draw health
+        } else if (farcells[3] == -1){
+            //draw enemy
+        }
         if(displayWalls[8]){
             g.setColor(backWalls());
             g.fillRect(200, 200, 300, 300);
 
 
         }
+        if(farcells[4] == 1){
+            //draw health
+        } else if (farcells[4] == -1){
+            //draw enemy
+        }
         if(displayWalls[9]){
             g.setColor(backWalls());
             g.fillRect(500, 200, 200, 300);
 
 
+        }
+        if(farcells[5] == 1){
+            //draw health
+        } else if (farcells[5] == -1){
+            //draw enemy
         }
         if(displayWalls[10]){
             g.setColor(leftWalls());
@@ -341,6 +374,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.setColor(backWalls());
             g.fillRect(135, 135, 430, 430);
 
+        }
+        if(farcells[6] == 1){
+            //draw health
+        } else if (farcells[6] == -1){
+            //draw enemy
         }
         if(displayWalls[14]){
             g.setColor(backWalls());
@@ -497,19 +535,26 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     private boolean[] left(boolean[] walls) {
         walls[0] = WallOnOff(3,xPosition-3, yPosition+1);
+        farcells[0] = EnemyorHealth(xPosition-3, yPosition+1);
         walls[1] = WallOnOff(3,xPosition-3, yPosition);
+        farcells[1] = EnemyorHealth(xPosition-3, yPosition);
         walls[2] = WallOnOff(3,xPosition-3, yPosition-1);
+        farcells[2] = EnemyorHealth(xPosition-3, yPosition-1);
         walls[3] = WallOnOff(2,xPosition-3, yPosition+1);
         walls[4] = WallOnOff(2,xPosition-3, yPosition);
         walls[5] = WallOnOff(0,xPosition-3, yPosition);
         walls[6] = WallOnOff(0,xPosition-3, yPosition-1);
         walls[7] = WallOnOff(3,xPosition-2, yPosition+1);
+        farcells[3] = EnemyorHealth(xPosition-2, yPosition+1);
         walls[8] = WallOnOff(3,xPosition-2, yPosition);
+        farcells[4] = EnemyorHealth(xPosition-2, yPosition);
         walls[9] = WallOnOff(3,xPosition-2, yPosition-1);
+        farcells[5] = EnemyorHealth(xPosition-2, yPosition-1);
         walls[10] = WallOnOff(2,xPosition-2, yPosition);
         walls[11] = WallOnOff(0,xPosition-2, yPosition);
         walls[12] = WallOnOff(3,xPosition-1, yPosition+1);
         walls[13] = WallOnOff(3,xPosition-1, yPosition);
+        farcells[6] = EnemyorHealth(xPosition-1, yPosition);
         walls[14] = WallOnOff(3,xPosition-1, yPosition-1);
         walls[15] = WallOnOff(2,xPosition-1, yPosition);
         walls[16] = WallOnOff(0,xPosition-1, yPosition);
@@ -523,19 +568,26 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     private boolean[] down(boolean[] walls) {
         walls[0] = WallOnOff(2, xPosition+1, yPosition+3);
+        farcells[0] = EnemyorHealth(xPosition+1, yPosition+3);
         walls[1] = WallOnOff(2, xPosition, yPosition+3);
+        farcells[1] = EnemyorHealth(xPosition, yPosition+3);
         walls[2] = WallOnOff(2, xPosition-1, yPosition+3);
+        farcells[2] = EnemyorHealth(xPosition-1, yPosition+3);
         walls[3] = WallOnOff(1, xPosition+1, yPosition+3);
         walls[4] = WallOnOff(1, xPosition, yPosition+3);
         walls[5] = WallOnOff(3, xPosition, yPosition+3);
         walls[6] = WallOnOff(3, xPosition-1, yPosition+3);
         walls[7] = WallOnOff(2, xPosition+1, yPosition+2);
+        farcells[3] = EnemyorHealth(xPosition+1, yPosition+2);
         walls[8] = WallOnOff(2, xPosition, yPosition+2);
+        farcells[4] = EnemyorHealth(xPosition, yPosition+2);
         walls[9] = WallOnOff(2, xPosition-1, yPosition+2);
+        farcells[5] = EnemyorHealth(xPosition-1, yPosition+2);
         walls[10] = WallOnOff(1, xPosition, yPosition+2);
         walls[11] = WallOnOff(3, xPosition, yPosition+2);
         walls[12] = WallOnOff(2, xPosition+1, yPosition+1);
         walls[13] = WallOnOff(2, xPosition, yPosition+1);
+        farcells[6] = EnemyorHealth(xPosition, yPosition+1);
         walls[14] = WallOnOff(2, xPosition-1, yPosition+1);
         walls[15] = WallOnOff(1, xPosition, yPosition+1);
         walls[16] = WallOnOff(3, xPosition, yPosition+1);
@@ -549,19 +601,26 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     private boolean[] right(boolean[] walls) {
         walls[0] = WallOnOff(1,xPosition+3, yPosition-1);
+        farcells[0] = EnemyorHealth(xPosition+3, yPosition-1);
         walls[1] = WallOnOff(1,xPosition+3, yPosition);
+        farcells[1] = EnemyorHealth(xPosition+3, yPosition);
         walls[2] = WallOnOff(1,xPosition+3, yPosition+1);
+        farcells[2] = EnemyorHealth(xPosition+3, yPosition+1);
         walls[3] = WallOnOff(0,xPosition+3, yPosition-1);
         walls[4] = WallOnOff(0,xPosition+3, yPosition);
         walls[5] = WallOnOff(2,xPosition+3, yPosition);
         walls[6] = WallOnOff(2,xPosition+3, yPosition+1);
         walls[7] = WallOnOff(1,xPosition+2, yPosition-1);
+        farcells[3] = EnemyorHealth(xPosition+2, yPosition-1);
         walls[8] = WallOnOff(1,xPosition+2, yPosition);
+        farcells[4] = EnemyorHealth(xPosition+2, yPosition);
         walls[9] = WallOnOff(1,xPosition+2, yPosition+1);
+        farcells[5] = EnemyorHealth(xPosition+2, yPosition+1);
         walls[10] = WallOnOff(0,xPosition+2, yPosition);
         walls[11] = WallOnOff(2,xPosition+2, yPosition);
         walls[12] = WallOnOff(1,xPosition+1, yPosition-1);
         walls[13] = WallOnOff(1,xPosition+1, yPosition);
+        farcells[6] = EnemyorHealth(xPosition+1, yPosition);
         walls[14] = WallOnOff(1,xPosition+1, yPosition+1);
         walls[15] = WallOnOff(0,xPosition+1, yPosition);
         walls[16] = WallOnOff(2,xPosition+1, yPosition);
@@ -575,19 +634,26 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     private boolean[] up(boolean[] walls) {
         walls[0] = WallOnOff(0, xPosition-1, yPosition-3);
+        farcells[0] = EnemyorHealth(xPosition-1, yPosition-3);
         walls[1] = WallOnOff(0, xPosition, yPosition-3);
+        farcells[1] = EnemyorHealth(xPosition, yPosition-3);
         walls[2] = WallOnOff(0, xPosition+1, yPosition-3);
+        farcells[2] = EnemyorHealth(xPosition+1, yPosition-3);
         walls[3] = WallOnOff(3, xPosition-1, yPosition-3);
         walls[4] = WallOnOff(3, xPosition, yPosition-3);
         walls[5] = WallOnOff(1, xPosition, yPosition-3);
         walls[6] = WallOnOff(1, xPosition+1, yPosition-3);
         walls[7] = WallOnOff(0, xPosition-1, yPosition-2);
+        farcells[3] = EnemyorHealth(xPosition-1, yPosition-2);
         walls[8] = WallOnOff(0, xPosition, yPosition-2);
+        farcells[4] = EnemyorHealth(xPosition, yPosition-2);
         walls[9] = WallOnOff(0, xPosition+1, yPosition-2);
+        farcells[5] = EnemyorHealth(xPosition+1, yPosition-2);
         walls[10] = WallOnOff(3, xPosition, yPosition-2);
         walls[11] = WallOnOff(1, xPosition, yPosition-2);
         walls[12] = WallOnOff(0, xPosition-1, yPosition-1);
         walls[13] = WallOnOff(0, xPosition, yPosition-1);
+        farcells[6] = EnemyorHealth(xPosition, yPosition-1);
         walls[14] = WallOnOff(0, xPosition+1, yPosition-1);
         walls[15] = WallOnOff(3, xPosition, yPosition-1);
         walls[16] = WallOnOff(1, xPosition, yPosition-1);
@@ -638,7 +704,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         if(life > 0){
-            if(mazeGrid[xPosition][yPosition].life > 0){
+            if(mazeGrid[xPosition][yPosition].life > 0 && mazeGrid[xPosition][yPosition].enemy){
                 repaint();
                 return;
             }
