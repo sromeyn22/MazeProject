@@ -14,6 +14,7 @@ public class FrontPageGraphics {
     int key;
     JFrame frame;
     boolean check;
+    boolean ifEnemies;
     int maxDimensions;
 
     public FrontPageGraphics() {
@@ -47,7 +48,7 @@ public class FrontPageGraphics {
                     typeOfMazeButton.setText("2D");
             }
         });
-        typeOfMazeButton.setBounds(700, 300, 100, 50);
+        typeOfMazeButton.setBounds(700, 250, 100, 50);
 
         JButton dimensionsAdd1 = new JButton("Add 1 to the dimensions");
         dimensionsAdd1.addActionListener(new ActionListener() {
@@ -109,7 +110,7 @@ public class FrontPageGraphics {
         JLabel typeOfMazeLabel = new JLabel();
         typeOfMazeLabel.setForeground(Color.WHITE);
         typeOfMazeLabel.setText("Choose what type of maze you want");
-        typeOfMazeLabel.setBounds(640, 250, 250, 50);
+        typeOfMazeLabel.setBounds(640, 200, 250, 50);
         typeOfMazeLabel.setFont(typeOfMazeLabel.getFont().deriveFont(typeOfMazeLabel.getFont().getStyle() | Font.BOLD));
 
         JLabel errorMessage = new JLabel();
@@ -117,6 +118,18 @@ public class FrontPageGraphics {
         errorMessage.setText("Error: enter a number for the key");
         errorMessage.setBounds(160, 650, 300,50);
         errorMessage.setVisible(false);
+
+        JButton enemiesButton = new JButton("Yes");
+        enemiesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (enemiesButton.getText().equals("Yes"))
+                    enemiesButton.setText("No");
+                else
+                    enemiesButton.setText("Yes");
+            }
+        });
+        enemiesButton.setBounds(700, 350, 100, 50);
 
         JButton start = new JButton("Start");
         start.addActionListener(new ActionListener() {
@@ -127,6 +140,11 @@ public class FrontPageGraphics {
                     typeOfMaze = 2;
                 else
                     typeOfMaze = 3;
+
+                if (enemiesButton.getText().equals("Yes"))
+                    ifEnemies = true;
+                else
+                    ifEnemies = false;
 
                 if (keyText.getText().equals("")) {
                     check = true;
@@ -148,6 +166,12 @@ public class FrontPageGraphics {
         });
         start.setBounds(700, 600, 100, 50);
 
+        JLabel enemiesLabel = new JLabel();
+        enemiesLabel.setForeground(Color.WHITE);
+        enemiesLabel.setText("Do you want enemies in the maze");
+        enemiesLabel.setBounds(640, 300, 250, 50);
+        enemiesLabel.setFont(enemiesLabel.getFont().deriveFont(enemiesLabel.getFont().getStyle() | Font.BOLD));
+
         frame.add(start);
         frame.add(errorMessage);
         frame.add(dimensionsAdd1);
@@ -159,6 +183,8 @@ public class FrontPageGraphics {
         frame.add(dimensionsLabel);
         frame.add(typeOfMazeButton);
         frame.add(typeOfMazeLabel);
+        frame.add(enemiesLabel);
+        frame.add(enemiesButton);
         frame.setSize(1024, 768);
     }
 }

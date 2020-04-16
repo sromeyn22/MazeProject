@@ -9,7 +9,7 @@ public class Main {
             } catch (InterruptedException e) {
             }
         }
-        Maze maze = new Maze(frontPage.dimensions, frontPage.key);
+        Maze maze = new Maze(frontPage.dimensions, frontPage.key, frontPage.ifEnemies);
         maze.createMaze();
         if (frontPage.typeOfMaze == 2) {
             GraphicInterface2D twoD = new GraphicInterface2D(maze.mazeGrid, maze.difficulty);

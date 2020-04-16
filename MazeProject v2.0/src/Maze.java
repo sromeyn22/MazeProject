@@ -4,6 +4,7 @@ public class Maze {
     Cell[][] mazeGrid;
     int difficulty;
     static int key;
+    boolean ifEnemies;
     static Random rand;
     static int dimensions;
     static int xPos;
@@ -13,8 +14,9 @@ public class Maze {
     static BacktrackerDS ds = new BacktrackerDS();
 
 
-    public Maze (int _dimensions, int _key){
+    public Maze (int _dimensions, int _key, boolean ifEnemies){
         dimensions = _dimensions;
+        this.ifEnemies = ifEnemies;
         mazeGrid = new Cell[dimensions][dimensions];
         for (int column = 0; column < dimensions; column++) {
             for (int row = 0; row < dimensions; row++) {
@@ -68,18 +70,24 @@ public class Maze {
             xPos = ds.returnx(xPos);
             yPos = ds.returny(yPos);
         }
-        for (int i = 0; i < mazeGrid.length; i++){
-            int w = rand.nextInt(dimensions);
-            int z = rand.nextInt(dimensions);
-            mazeGrid[w][z].enemy = true;
-            mazeGrid[w][z].life = rand.nextInt(5)+5;
-        }
-        for (int i = 0; i < 2*mazeGrid.length; i++){
-            int w = rand.nextInt(dimensions);
-            int z = rand.nextInt(dimensions);
-            if(!mazeGrid[w][z].enemy){
-                mazeGrid[w][z].heart = true;
-                mazeGrid[w][z].life = rand.nextInt(5)+5;
+        if(ifEnemies) {
+            for (int i = 0; i < mazeGrid.length; i++) {
+                int w = rand.nextInt(dimensions);
+                int z = rand.nextInt(dimensions);
+                if(!(w == 0 && z == 0) && !(w == dimensions-1 && z == dimensions-1)) {
+                    mazeGrid[w][z].enemy = true;
+                    mazeGrid[w][z].life = rand.nextInt(5) + 5;
+                }
+            }
+            for (int i = 0; i < 2 * mazeGrid.length; i++) {
+                int w = rand.nextInt(dimensions);
+                int z = rand.nextInt(dimensions);
+                if(!(w == 0 && z == 0) && !(w == dimensions-1 && z == dimensions-1)) {
+                    if (!mazeGrid[w][z].enemy) {
+                        mazeGrid[w][z].heart = true;
+                        mazeGrid[w][z].life = rand.nextInt(5) + 5;
+                    }
+                }
             }
         }
 //         for (int i = 0; i < mazeGrid.length; i++){
