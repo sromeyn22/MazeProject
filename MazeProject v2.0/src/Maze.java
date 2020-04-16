@@ -61,7 +61,7 @@ public class Maze {
         }
         xPos = ds.returnx(xPos);
         yPos = ds.returny(yPos);
-        difficulty = ds.getLength();
+        //difficulty = ds.getLength();
         while(xPos != 0 || yPos != 0){
             mazeGrid[xPos][yPos].Path = true;
             ds.pop();
@@ -71,17 +71,23 @@ public class Maze {
         for (int i = 0; i < mazeGrid.length; i++){
             int w = rand.nextInt(dimensions);
             int z = rand.nextInt(dimensions);
-            mazeGrid[w][z].enemy = true;
-            mazeGrid[w][z].life = rand.nextInt(5)+5;
-        }
-        for (int i = 0; i < 2*mazeGrid.length; i++){
-            int w = rand.nextInt(dimensions);
-            int z = rand.nextInt(dimensions);
-            if(!mazeGrid[w][z].enemy){
-                mazeGrid[w][z].health = true;
+            int y = rand.nextInt(dimensions);
+            int p = rand.nextInt(dimensions);
+
+            while (w == y && y == p) {
+                 w = rand.nextInt(dimensions);
+                 z = rand.nextInt(dimensions);
+                 y = rand.nextInt(dimensions);
+                 p = rand.nextInt(dimensions);
+
             }
+            mazeGrid[w][z].enemy = true;
+            mazeGrid[w][z].life = rand.nextInt(5) + 5;
+            mazeGrid[y][p].heart = true;
+            mazeGrid[y][p].life = rand.nextInt(5) + 5;
         }
     }
+
 
     
     private void ChooseNeighborSolution() {
