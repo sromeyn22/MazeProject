@@ -176,37 +176,48 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     }
 
         public void compass(Graphics g) {
-            double finish = mazeGrid.length - 1;
-            double run = xPosition - finish;
-            double slope =  (yPosition - finish) / run;
-            double theta = Math.atan(slope);
-            double xCoor;
 
-            if (run == 0) {
-                 xCoor = 60;
-            } else {
-                 xCoor = 15 + 30 * Math.cos(theta);}
+        double hypotenuse = (double) (mazeGrid.length - yPosition) / (mazeGrid.length - xPosition);
+        double theta = Math.atan(hypotenuse);
+        double v = 50 * Math.cos(theta) + 609; //x
+        double u = 30 * Math.sin(theta) + 608.5;
 
-            double yCoor = 15 + 30 * Math.sin(theta);
+        Color orange = new Color(217, 135, 5);
+        Color grey = new Color(110, 108, 100);
+        Color white = new Color(230, 218, 197);
 
-            Color yellow = new Color(252, 173, 3);
-            Color blue = new Color(130, 216, 237);
-            Color red = new Color(163, 32, 11);
+        g.setColor(Color.BLACK);
+        g.fillOval(540, 570, 131, 106);
 
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
-                    RenderingHints.VALUE_STROKE_PURE);
+        g.setColor(orange);
+        g.fillOval(540, 570, 132, 101);
 
-            g2.setColor(yellow);
-            g2.fillOval(10, 10, 100, 100);
-            g2.setColor(blue);
-            g2.fillOval(15, 15, 90, 90);
-            g2.setColor(red);
-            g2.draw(new Line2D.Double(60, 60, xCoor, yCoor));
-            g2.setColor(Color.yellow);
-            g2.fillOval(56, 56, 8, 8);
+        g.setColor(grey);
+        g.fillOval(544, 570, 128, 88);
+
+        g.setColor(white);
+        g.fillOval(553, 575, 112, 67);
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
+                RenderingHints.VALUE_STROKE_PURE);
+
+        g2.setColor(Color.BLACK);
+       
+        if (direction == 0) {
+            g2.draw(new Line2D.Double(609, 608.5, v, u));
+
+        } else if (direction == 1) {
+            g2.draw(new Line2D.Double(609, 608.5, v, u - (2 * (u - 608.5))));
+
+        } else if (direction == 2) {
+            g2.draw(new Line2D.Double(609, 608.5, v - (2 * (v - 609)), u - (2 * (u - 608.5))));
+
+        } else if (direction == 3) {
+            g2.draw(new Line2D.Double(609, 608.5, v - (2 * (v - 609)), u));
 
         }
+    }
     
     private int EnemyorHealth(int Xuse, int Yuse){
         int ToReturn = 0;
