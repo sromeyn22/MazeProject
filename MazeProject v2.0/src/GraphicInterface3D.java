@@ -164,10 +164,28 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     public void compass(Graphics g) {
 
-        double hypotenuse = (double) (mazeGrid.length - yPosition) / (mazeGrid.length - xPosition);
-        double theta = Math.atan(hypotenuse);
-        double v = 50 * Math.cos(theta) + 609; //x
-        double u = 30 * Math.sin(theta) + 608.5;
+        double v = 0; //x
+        double u = 0;
+        if (xPosition != mazeGrid.length-1 || yPosition != mazeGrid.length-1){
+            double hypotenuse = 0;
+            if (direction == 1 || direction == 2){
+                hypotenuse = (double) (mazeGrid.length-1 + yPosition) / (double) (mazeGrid.length-1 + xPosition);
+            } else {
+                hypotenuse = (double) (mazeGrid.length-1 - yPosition) / (double) (mazeGrid.length-1 - xPosition);
+            }
+            double theta = Math.atan(hypotenuse);
+            if(direction == 1 || direction == 0){
+                v = 50 * Math.cos(theta);
+            } else {
+                v = 50 * Math.cos(theta+Math.PI/2);
+            }
+            if (direction == 1 || direction == 2){
+                u = -Math.sqrt((1-((v*v)/(50*50)))*30*30);
+            } else {
+                u = Math.sqrt((1-((v*v)/(50*50)))*30*30);
+            }
+        }
+
 
         Color orange = new Color(217, 135, 5);
         Color grey = new Color(110, 108, 100);
@@ -190,20 +208,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                 RenderingHints.VALUE_STROKE_PURE);
 
         g2.setColor(Color.BLACK);
-
-        if (direction == 0) {
-            g2.draw(new Line2D.Double(609, 608.5, v, u));
-
-        } else if (direction == 1) {
-            g2.draw(new Line2D.Double(609, 608.5, v, u - (2 * (u - 608.5))));
-
-        } else if (direction == 2) {
-            g2.draw(new Line2D.Double(609, 608.5, v - (2 * (v - 609)), u - (2 * (u - 608.5))));
-
-        } else if (direction == 3) {
-            g2.draw(new Line2D.Double(609, 608.5, v - (2 * (v - 609)), u));
-
-        }
+        g2.draw(new Line2D.Double(609, 608.5, 609+v, 608.5+u));
     }
 
     private int EnemyorHealth(int Xuse, int Yuse){
