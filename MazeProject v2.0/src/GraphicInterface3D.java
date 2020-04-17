@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.*;
+import java.util.Arrays;
 
 public class GraphicInterface3D extends JPanel implements KeyListener {
     Cell[][] mazeGrid;
@@ -39,7 +40,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         walls(g);
         enemy(g);
         compass(g);
-        heart(g);
+        if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0) {
+            drawHeart(g, 270, 350, 430, 350, 500, 530, 650);
+            g.setColor(Color.GREEN);
+            g.fillRect(280, 180, 18 * mazeGrid[xPosition][yPosition].life, 10);
+        }
         g.setColor(Color.RED);
         g.drawString(Integer.toString(difficulty), 640, 25);
         g.fillRect(50+life, 650, 100-life, 10);
@@ -65,7 +70,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         }
     }
 
-  public void enemy(Graphics g){
+    public void enemy(Graphics g){
         if(mazeGrid[xPosition][yPosition].enemy && mazeGrid[xPosition][yPosition].life > 0){
             Graphics2D g2 = (Graphics2D) g;
 
@@ -112,70 +117,52 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         }
     }
 
-    public void heart(Graphics g) {
-        if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0) {
-            
-            Color one = new Color(0, 0, 0);
-            Color two = new Color(0, 0, 0);
-            Color three = new Color(0, 0, 0);
-            Color four = new Color(0, 0, 0);
-            if(direction == 0){
-                one = new Color(153, 255, 255);
-                two = new Color(51, 255, 255);
-                three = new Color(0, 255, 255);
-                four = new Color(102, 255, 255);
-            } else if(direction == 1){
-                one = new Color(51, 255, 255);
-                two = new Color(0, 204, 204);
-                three = new Color(0, 153, 153);
-                four = new Color(0, 255, 255);
-            } else if(direction == 2){
-                one = new Color(0, 204, 204);
-                two = new Color(51, 255, 255);
-                three = new Color(0, 255, 255);
-                four = new Color(0, 153, 153);
-            } else if(direction == 3){
-                one = new Color(51, 255, 255);
-                two = new Color(153, 255, 255);
-                three = new Color(102, 255, 255);
-                four = new Color(0, 255, 255);
-            }
-            int[] xleft = {350, 350, 270};
-            int[] yup = {350, 530, 500};
-            int[] xright = {350, 350, 430};
-            int[] ydown = {650, 530, 500};
-            g.setColor(one);
-            g.fillPolygon(xright, yup, 3);
-
-            g.setColor(two);
-            g.fillPolygon(xleft, yup, 3);
-
-            g.setColor(three);
-            g.fillPolygon(xleft, ydown, 3);
-
-            g.setColor(four);
-            g.fillPolygon(xright, ydown, 3);
-
-//             g.setColor(Color.BLACK);
-//             int[] xPoints = {265, 435, 350}; //left, right, bottom
-//             int[] yPoints = {385, 385, 520};
-//             g.fillPolygon(xPoints, yPoints, 3);
-//             g.fillArc(265, 335, 95, 100, 0, 180);
-//             g.fillArc(340, 335, 95, 100, 0, 180);
-
-//             g.setColor(Color.MAGENTA);
-//             int[] xPoints1 = {275, 425, 350}; //left, right, bottom
-//             int[] yPoints1 = {382, 382, 500};
-//             g.fillPolygon(xPoints1, yPoints1, 3);
-//             g.fillArc(275, 345, 75, 75, 0, 180);
-//             g.fillArc(350, 345, 75, 75, 0, 180);
-
-            g.setColor(Color.GREEN);
-            g.fillRect(280, 180, 18 * mazeGrid[xPosition][yPosition].life, 10);
+    public void drawHeart(Graphics g, int x1, int x2, int x3, int y1, int y2, int y3, int y4) {
+        Color one = new Color(0, 0, 0);
+        Color two = new Color(0, 0, 0);
+        Color three = new Color(0, 0, 0);
+        Color four = new Color(0, 0, 0);
+        if(direction == 0){
+            one = new Color(153, 255, 255);
+            two = new Color(51, 255, 255);
+            three = new Color(0, 255, 255);
+            four = new Color(102, 255, 255);
+        } else if(direction == 1){
+            one = new Color(51, 255, 255);
+            two = new Color(0, 204, 204);
+            three = new Color(0, 153, 153);
+            four = new Color(0, 255, 255);
+        } else if(direction == 2){
+            one = new Color(0, 204, 204);
+            two = new Color(51, 255, 255);
+            three = new Color(0, 255, 255);
+            four = new Color(0, 153, 153);
+        } else if(direction == 3){
+            one = new Color(51, 255, 255);
+            two = new Color(153, 255, 255);
+            three = new Color(102, 255, 255);
+            four = new Color(0, 255, 255);
         }
+        int[] xleft = {x2, x2, x1};
+        int[] yup = {y1, y3, y2};
+        int[] xright = {x2, x2, x3};
+        int[] ydown = {y4, y3, y2};
+
+        g.setColor(one);
+        g.fillPolygon(xright, yup, 3);
+
+        g.setColor(two);
+        g.fillPolygon(xleft, yup, 3);
+
+        g.setColor(three);
+        g.fillPolygon(xleft, ydown, 3);
+
+        g.setColor(four);
+        g.fillPolygon(xright, ydown, 3);
+
     }
 
-        public void compass(Graphics g) {
+    public void compass(Graphics g) {
 
         double hypotenuse = (double) (mazeGrid.length - yPosition) / (mazeGrid.length - xPosition);
         double theta = Math.atan(hypotenuse);
@@ -203,7 +190,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                 RenderingHints.VALUE_STROKE_PURE);
 
         g2.setColor(Color.BLACK);
-       
+
         if (direction == 0) {
             g2.draw(new Line2D.Double(609, 608.5, v, u));
 
@@ -218,7 +205,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
         }
     }
-    
+
     private int EnemyorHealth(int Xuse, int Yuse){
         int ToReturn = 0;
         try{
@@ -247,7 +234,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillPolygon(xPoints, yPoints, 3);
         }
         if(farcells[0] == 1){
-            //draw health
+            drawHeart(g, 141, 170, 199, 350, 405, 416, 460);
         } else if (farcells[0] == -1){
             //draw enemy
         }
@@ -266,7 +253,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
         }
         if(farcells[1] == 1){
-            //draw health
+            drawHeart(g, 321, 350, 379, 350, 405, 416, 460);
         } else if (farcells[1] == -1){
             //draw enemy
         }
@@ -285,7 +272,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
         }
         if(farcells[2] == 1){
-            //draw health
+            drawHeart(g, 501, 530, 559, 350, 405, 416, 460);
         } else if (farcells[2] == -1){
             //draw enemy
         }
@@ -339,7 +326,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
         }
         if(farcells[3] == 1){
-            //draw health
+            drawHeart(g, 3, 50, 97, 350, 438, 456, 525);
         } else if (farcells[3] == -1){
             //draw enemy
         }
@@ -350,7 +337,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
         }
         if(farcells[4] == 1){
-            //draw health
+            drawHeart(g, 303, 350, 397, 350, 438, 456, 525);
         } else if (farcells[4] == -1){
             //draw enemy
         }
@@ -361,7 +348,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
         }
         if(farcells[5] == 1){
-            //draw health
+            drawHeart(g, 603, 650, 697, 350, 438, 456, 525);
         } else if (farcells[5] == -1){
             //draw enemy
         }
@@ -389,7 +376,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
         }
         if(farcells[6] == 1){
-            //draw health
+            drawHeart(g, 286, 350, 414, 350, 470, 494, 590);
         } else if (farcells[6] == -1){
             //draw enemy
         }
