@@ -167,9 +167,9 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         double v = 0; //x
         double u = 0;
         if (xPosition != mazeGrid.length-1 || yPosition != mazeGrid.length-1){
-            double hypotenuse = 0;
+            double hypotenuse;
             if (direction == 1 || direction == 2){
-                hypotenuse = (double) (mazeGrid.length-1 + yPosition) / (double) (mazeGrid.length-1 + xPosition);
+                hypotenuse = (double) (mazeGrid.length-1 - xPosition) / (double) (mazeGrid.length-1 - yPosition);
             } else {
                 hypotenuse = (double) (mazeGrid.length-1 - yPosition) / (double) (mazeGrid.length-1 - xPosition);
             }
