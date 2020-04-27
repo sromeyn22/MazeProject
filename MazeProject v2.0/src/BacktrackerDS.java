@@ -25,6 +25,7 @@ public class BacktrackerDS extends OrderedCollection{
     public int getLength(){
         return length;
     }
+
     public int returnx(int X){
         if(end == null){
             return X;
