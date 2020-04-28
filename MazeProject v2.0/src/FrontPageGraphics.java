@@ -243,6 +243,7 @@ public class FrontPageGraphics {
         frame.add(enemiesLabel);
         frame.add(enemiesButton);
         frame.setSize(1024, 768);
+        frame.setResizable(false);
     }
 }
 

@@ -171,6 +171,7 @@ public class Leaderboard {
         // display the frame
         window.setSize(new Dimension(400, 420));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
         window.setVisible(true);
     }
 

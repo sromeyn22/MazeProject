@@ -30,6 +30,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         frame3D.setSize(700, 700);
         frame3D.addKeyListener(this);
         frame3D.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame3D.setResizable(false);
         frame3D.setContentPane(this);
     }
 

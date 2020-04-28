@@ -23,6 +23,7 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         frame2D.setSize(boxSize*mazeGrid.length, boxSize*mazeGrid.length+20);
         frame2D.addKeyListener(this);
         frame2D.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame2D.setResizable(false);
         frame2D.setContentPane(this);
     }
 
