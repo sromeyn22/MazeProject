@@ -46,6 +46,18 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.setColor(Color.GREEN);
             g.fillRect(280, 180, 18 * mazeGrid[xPosition][yPosition].life, 10);
         }
+        if(mazeGrid[xPosition][yPosition].enemy && mazeGrid[xPosition][yPosition].life > 0) {
+            enemy(g,240, 220, 380, 267, 236, 350, 378, 172, 345, 350, 464, 433, 275,
+                    240, 330, 350, 180, 350, 370, 460, 425, 250, 250, 200, 360, 280,
+                    310, 50, 372, 289, 319, 32, 380, 275, 380, 150, 75, 310, 317,
+                    13, 400, 315, 422, 25, 20, 360);
+
+            g.setColor(Color.RED);
+            g.fillRect(260 + 18 * mazeGrid[xPosition][yPosition].life, 180, 180 - 18 * mazeGrid[xPosition][yPosition].life, 10);
+            g.setColor(Color.GREEN);
+            g.fillRect(260, 180, 18*mazeGrid[xPosition][yPosition].life, 10);
+        }
+        
         g.setColor(Color.RED);
         g.drawString(Integer.toString(difficulty), 640, 25);
         g.fillRect(50+life, 650, 100-life, 10);
@@ -61,7 +73,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             repaint();
         }
         if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0 && life > 0){
-
+        
             if (life < 100) { life = life + 5; }
         }
         if(life == 0){
@@ -71,52 +83,49 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         }
     }
 
-    public void enemy(Graphics g){
-        if(mazeGrid[xPosition][yPosition].enemy && mazeGrid[xPosition][yPosition].life > 0){
-            Graphics2D g2 = (Graphics2D) g;
+   
+    public void enemy(Graphics g, int ovalXY, int ovalW, int ovalH, int xp1, int xp2, int xp3, int yp1, int yp2, int yp3, int xp4, int xp5, int xp6,
+                      int xp7, int xp8, int xp9, int yp7, int yp8, int yp9, int xp10, int xp11, int xp12, int ovalx1, int ovaly1, int ovalw1, int ovalh1,
+                      int eyeX, int eyeY, int eyeWH, int eyeX1, int eyeX2, int eyeY1, int eyeWH1, int eyeX3, int arcX, int arcY, int arcW, int arcH, int eyeX4,
+                      int eyeY2, int eyeWH2, int eyeX5, int tX, int tY, int tW, int tH, int tX1) {
 
-            g.setColor(Color.BLACK);
-            g.fillOval(240, 240, 220, 380);
-            int[] xPoints3 = {267, 346, 236}; //left, right, top
-            int[] yPoints3 = {378, 345, 172};
-            g2.fillPolygon(xPoints3, yPoints3, 3);
-            int[] xPoints2 = {354, 433, 464};
-            int[] yPoints2 = {345, 355, 172};
-            g2.fillPolygon(xPoints2, yPoints2, 3);
+        Graphics2D g2 = (Graphics2D) g;
+        g.setColor(Color.BLACK);
+        g.fillOval(ovalXY, ovalXY, ovalW, ovalH);
+        int[] xPoints3 = {xp1, xp2, xp3};
+        int[] yPoints3 = {yp1, yp2, yp3};
+        g2.fillPolygon(xPoints3, yPoints3, 3);
+        int[] xPoints2 = {xp4, xp5, xp6};
+        int[] yPoints2 = {yp3, yp2, yp1};
+        g2.fillPolygon(xPoints2, yPoints2, 3);
 
-            Color ears = new Color(222, 71, 141);
-            g2.setColor(ears);
-            int[] xPoints = {275, 330, 240};
-            int[] yPoints = {350, 350, 180};
-            g2.fillPolygon(xPoints, yPoints, 3);
-            int[] xPoints1 = {370, 425, 460};
-            int[] yPoints1 = {350, 350, 180};
-            g2.fillPolygon(xPoints1, yPoints1, 3);
+        Color ears = new Color(222, 71, 141);
+        g2.setColor(ears);
+        int[] xPoints = {xp7, xp8, xp9};
+        int[] yPoints = {yp7, yp8, yp9};
+        g2.fillPolygon(xPoints, yPoints, 3);
+        int[] xPoints1 = {xp10, xp11, xp12};
+        int[] yPoints1 = {yp9, yp8, yp7};
+        g2.fillPolygon(xPoints1, yPoints1, 3);
 
-            Color body = new Color(227, 126, 5);
-            g.setColor(body);
-            g.fillOval(250, 250, 200, 360);
+        Color body = new Color(227, 126, 5);
+        g.setColor(body);
+        g.fillOval(ovalx1, ovaly1, ovalw1, ovalh1);
 
-            g.setColor(Color.WHITE);
-            g.fillOval(280, 310, 50, 50);
-            g.fillOval(372, 310, 50, 50);
-            g.setColor(Color.BLACK);
-            g.fillOval(289, 319, 32, 32);
-            g.fillOval(380, 319, 32, 32);
-            g.fillArc(275, 380, 150, 75, 0, -180);
-            g.setColor(Color.WHITE);
-            g.fillOval(310, 317, 13, 13);
-            g.fillOval(400, 317, 13, 13);
-            g2.setColor(Color.WHITE);
-            g2.fillRoundRect(315, 422, 25, 20, 15, 15);
-            g2.fillRoundRect(360, 422, 25, 20, 15, 15);
-
-            g.setColor(Color.RED);
-            g.fillRect(260 + 18 * mazeGrid[xPosition][yPosition].life, 180, 180 - 18 * mazeGrid[xPosition][yPosition].life, 10);
-            g.setColor(Color.GREEN);
-            g.fillRect(260, 180, 18*mazeGrid[xPosition][yPosition].life, 10);
-        }
+        g.setColor(Color.WHITE);
+        g.fillOval(eyeX, eyeY, eyeWH, eyeWH);
+        g.fillOval(eyeX1, eyeY, eyeWH, eyeWH);
+        g.setColor(Color.BLACK);
+        g.fillOval(eyeX2, eyeY1, eyeWH1, eyeWH1);
+        g.fillOval(eyeX3, eyeY1, eyeWH1, eyeWH1);
+        g.fillArc(arcX, arcY, arcW, arcH, 0, -180);
+        g.setColor(Color.WHITE);
+        g.fillOval(eyeX4, eyeY2, eyeWH2, eyeWH2);
+        g.fillOval(eyeX5, eyeY2, eyeWH2, eyeWH2);
+        g2.fillRoundRect(tX, tY, tW, tH, 15, 15);
+        g2.fillRoundRect(tX1, tY, tW, tH, 15, 15);
     }
+
 
     public void drawHeart(Graphics g, int x1, int x2, int x3, int y1, int y2, int y3, int y4) {
         Color one = new Color(0, 0, 0);
@@ -242,7 +251,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         if(farcells[0] == 1){
             drawHeart(g, 141, 170, 199, 350, 405, 416, 460);
         } else if (farcells[0] == -1){
-            //draw enemy
+            enemy(g,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 145, 137, 164, 380,
+                    310, 370, 189, 216, 208, 140, 350, 74, 110, 0, 0, 0, 0,
+                    155, 375, 15, 185, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0);
         }
         if(displayWalls[1]){
             g.setColor(backWalls());
@@ -261,7 +273,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         if(farcells[1] == 1){
             drawHeart(g, 321, 350, 379, 350, 405, 416, 460);
         } else if (farcells[1] == -1){
-            //draw enemy
+            enemy(g,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 320, 312, 339, 430,
+                    360, 420, 359, 386, 378, 320, 390, 60, 90, 0, 0, 0, 0,
+                    332, 405, 15, 353, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0);
         }
         if(displayWalls[2]){
             g.setColor(backWalls());
@@ -280,7 +295,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         if(farcells[2] == 1){
             drawHeart(g, 501, 530, 559, 350, 405, 416, 460);
         } else if (farcells[2] == -1){
-            //draw enemy
+            enemy(g,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 505, 497, 524,
+                    380, 310, 370, 549, 576, 568, 500, 350, 74, 110, 0, 0, 0,
+                    0, 515, 375, 15, 545, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0);
         }
         if(displayWalls[3]){
             g.setColor(leftWalls());
@@ -334,7 +352,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         if(farcells[3] == 1){
             drawHeart(g, 3, 50, 97, 350, 438, 456, 525);
         } else if (farcells[3] == -1){
-            //draw enemy
+          enemy(g,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 30, 80, 420,
+                    340, 430, 70, 120, 110, 30, 360, 94, 160, 47, 382, 26, 82,
+                    50, 385, 20, 85, 48, 420, 60, 35, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0);
         }
         if(displayWalls[8]){
             g.setColor(backWalls());
@@ -345,7 +366,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         if(farcells[4] == 1){
             drawHeart(g, 303, 350, 397, 350, 438, 456, 525);
         } else if (farcells[4] == -1){
-            //draw enemy
+            enemy(g,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 320, 310, 360, 420,
+                    340, 430, 350, 406, 390, 310, 360, 94, 160, 327, 382, 26, 362,
+                    330, 385, 20, 365, 328, 420, 60, 35, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0);
         }
         if(displayWalls[9]){
             g.setColor(backWalls());
@@ -356,7 +380,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         if(farcells[5] == 1){
             drawHeart(g, 603, 650, 697, 350, 438, 456, 525);
         } else if (farcells[5] == -1){
-            //draw enemy
+             enemy(g,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 610, 600, 650, 420,
+                    340, 430, 650, 700, 690, 600, 360, 94, 160, 617, 382, 26, 652,
+                    620, 385, 20, 655, 618, 420, 60, 35, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0);
+        
         }
         if(displayWalls[10]){
             g.setColor(leftWalls());
@@ -384,7 +412,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         if(farcells[6] == 1){
             drawHeart(g, 286, 350, 414, 350, 470, 494, 590);
         } else if (farcells[6] == -1){
-            //draw enemy
+            
+            enemy(g,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 320, 305, 400, 470,
+                    380, 480, 325, 420, 405, 305, 410, 120, 185, 332, 437, 26, 367,
+                    335, 440, 20, 370, 325, 470, 75, 45, 0, 0, 0, 0, 345, 495,
+                    18, 9, 362);
         }
         if(displayWalls[14]){
             g.setColor(backWalls());
