@@ -75,6 +75,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         frame3D.setContentPane(this);
     }
 
+     /**
+     * Draws to screen floor, mist, walls, compass, and enemies or health.
+     * @param g object Graphics g.
+     */
     public void paintComponent(Graphics g){
         displayWalls = whichWallsToDraw();
         floor(g);
@@ -82,28 +86,36 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         walls(g);
         enemy(g);
         compass(g);
+        
+        //Draws a heart or an enemy in the current position of the user.
         if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0) {
             drawHeart(g, 270, 350, 430, 350, 500, 530, 650);
             g.setColor(Color.GREEN);
+            //Health points remaining in heart.
             g.fillRect(280, 180, 18 * mazeGrid[xPosition][yPosition].life, 10);
         }
+        
         if(mazeGrid[xPosition][yPosition].enemy && mazeGrid[xPosition][yPosition].life > 0) {
             enemy(g,240, 220, 380, 267, 236, 350, 378, 172, 345, 350, 464, 433, 275,
                     240, 330, 350, 180, 350, 370, 460, 425, 250, 250, 200, 360, 280,
                     310, 50, 372, 289, 319, 32, 380, 275, 380, 150, 75, 310, 317,
                     13, 400, 315, 422, 25, 20, 360);
-
+            
+            //Health level remaining of enemy.
             g.setColor(Color.RED);
             g.fillRect(260 + 18 * mazeGrid[xPosition][yPosition].life, 180, 180 - 18 * mazeGrid[xPosition][yPosition].life, 10);
             g.setColor(Color.GREEN);
             g.fillRect(260, 180, 18*mazeGrid[xPosition][yPosition].life, 10);
         }
         
+        //Difficulty level in top right corner. Current health level in bottom left corner.
         g.setColor(Color.RED);
         g.drawString(Integer.toString(difficulty), 640, 25);
         g.fillRect(50+life, 650, 100-life, 10);
         g.setColor(Color.GREEN);
         g.fillRect(50, 650, life, 10);
+        
+        //Decrease in health levels when enemy continues to be in frame.
         if(mazeGrid[xPosition][yPosition].enemy && mazeGrid[xPosition][yPosition].life > 0 && life > 0){
             life = life - 5;
             try{
@@ -113,23 +125,75 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             }
             repaint();
         }
+        //Increase in health levels when collecting from heart.
         if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0 && life > 0){
         
             if (life < 100) { life = life + 5; }
         }
+         //User is out of life points, loses the maze.
         if(life == 0){
             g.setColor(Color.WHITE);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
             g.drawString("YOU LOSE", 260, 200);
         }
     }
-
-   
+    
+/**
+     * Method that draws enemies.
+     * @param g object Graphics g
+     * @param ovalXY XY position of enemy outline
+     * @param ovalW width of enemy outline
+     * @param ovalH height of enemy outline
+     * @param xp1 left base x point of first ear outline
+     * @param xp2 apex x point of first ear outline
+     * @param xp3 right base x point of first ear outline
+     * @param yp1 left base y point of first ear outline, right base x point of second ear outline
+     * @param yp2 apex y point of first ear outline
+     * @param yp3 right base y point of first ear outline, left base x point of second ear outline
+     * @param xp4 left base x point of second ear outline
+     * @param xp5 apex x point of second ear outline
+     * @param xp6 right base x point of second ear outline
+     * @param xp7 left base x point of first ear 
+     * @param xp8 apex x point of first ear
+     * @param xp9 right base x point of first ear
+     * @param yp7 left base y point of first ear, right base x point of second ear 
+     * @param yp8 apex y point of first ear 
+     * @param yp9 right base y point of first ear, left base x point of second ear
+     * @param xp10 left base x point of second ear 
+     * @param xp11 apex x point of second ear 
+     * @param xp12 right base x point of second ear 
+     * @param ovalx1 x position of enemy
+     * @param ovaly1 y position of enemy
+     * @param ovalw1 width of enemy
+     * @param ovalh1 height of enemy
+     * @param eyeX x position of left eye outline
+     * @param eyeY y position of eye outlines
+     * @param eyeWH width and height of eye outlines
+     * @param eyeX1 x position of right eye outline
+     * @param eyeX2 x position of left eye
+     * @param eyeY1 y position of eyes
+     * @param eyeWH1 width and height of eyes
+     * @param eyeX3 x position of right eye
+     * @param arcX x position of mouth
+     * @param arcY y position of mouth
+     * @param arcW mouth width
+     * @param arcH mouth height
+     * @param eyeX4 x position of left pupil 
+     * @param eyeY2 y positions of pupil 
+     * @param eyeWH2 width and height of pupil
+     * @param eyeX5 x position of right pupil
+     * @param tX x position of left tooth
+     * @param tY y positions of teeth
+     * @param tW tooth width
+     * @param tH tooth height
+     * @param tX1 x position of right tooth
+     */
     public void enemy(Graphics g, int ovalXY, int ovalW, int ovalH, int xp1, int xp2, int xp3, int yp1, int yp2, int yp3, int xp4, int xp5, int xp6,
                       int xp7, int xp8, int xp9, int yp7, int yp8, int yp9, int xp10, int xp11, int xp12, int ovalx1, int ovaly1, int ovalw1, int ovalh1,
                       int eyeX, int eyeY, int eyeWH, int eyeX1, int eyeX2, int eyeY1, int eyeWH1, int eyeX3, int arcX, int arcY, int arcW, int arcH, int eyeX4,
                       int eyeY2, int eyeWH2, int eyeX5, int tX, int tY, int tW, int tH, int tX1) {
 
+        //Enemy outline.
         Graphics2D g2 = (Graphics2D) g;
         g.setColor(Color.BLACK);
         g.fillOval(ovalXY, ovalXY, ovalW, ovalH);
@@ -140,6 +204,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         int[] yPoints2 = {yp3, yp2, yp1};
         g2.fillPolygon(xPoints2, yPoints2, 3);
 
+        //Ears.
         Color ears = new Color(222, 71, 141);
         g2.setColor(ears);
         int[] xPoints = {xp7, xp8, xp9};
@@ -149,10 +214,12 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         int[] yPoints1 = {yp9, yp8, yp7};
         g2.fillPolygon(xPoints1, yPoints1, 3);
 
+        //Body.
         Color body = new Color(227, 126, 5);
         g.setColor(body);
         g.fillOval(ovalx1, ovaly1, ovalw1, ovalh1);
 
+        //Facial features.
         g.setColor(Color.WHITE);
         g.fillOval(eyeX, eyeY, eyeWH, eyeWH);
         g.fillOval(eyeX1, eyeY, eyeWH, eyeWH);
@@ -167,7 +234,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         g2.fillRoundRect(tX1, tY, tW, tH, 15, 15);
     }
 
-
+  
     public void drawHeart(Graphics g, int x1, int x2, int x3, int y1, int y2, int y3, int y4) {
         Color one = new Color(0, 0, 0);
         Color two = new Color(0, 0, 0);
@@ -212,10 +279,14 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         g.fillPolygon(xright, ydown, 3);
 
     }
-
+    
+  /**
+    *Method that draws compass in bottom left corner.
+    * @param g object Graphics g
+    */
     public void compass(Graphics g) {
-
-        double v = 0; //x
+        
+        double v = 0;
         double u = 0;
         if (xPosition != mazeGrid.length-1 || yPosition != mazeGrid.length-1){
             double hypotenuse;
