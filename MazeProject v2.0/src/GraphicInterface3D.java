@@ -1,20 +1,53 @@
+/**
+ * The GraphicInterface3D class generates an interactive depiction of a 3D maze based on user specifications chosen
+ * in FrontPageGraphics (enemies, dimension of maze, random key.
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.*;
-import java.util.Arrays;
+import java.awt.Graphics;
 
 public class GraphicInterface3D extends JPanel implements KeyListener {
+    /**
+     * Double Cell array with length determined by user inputted dimensions of maze (bounded from 2-30 with
+     * a default value of 15).
+     */
     Cell[][] mazeGrid;
     int difficulty;
+    /**
+     * Direction that the user is facing in the maze.
+     */
     int direction; // 0 for north, 1 for east, 2 for south, 3 for west
+    /**
+     * X-position of user in the maze in array mazeGrid.
+     */
     int xPosition;
+    /**
+     * Y-position of user in the maze in array mazeGrid.
+     */
     int yPosition;
+    /**
+     * Boolean array containing statements for the graphics of different walls within the maze.
+     */
     boolean[] displayWalls = new boolean[22];
+    /**
+     * JFrame for maze.
+     */
     JFrame frame3D;
+    /**
+     * How much life (out of 100) that the user has.
+     */
     int life;
+    /**
+     * Integer array of cells that are in view for the user. Contains statements that determine if there is an enemy, health, or nothing.
+     */
     int[] farcells = new int[7];
+    /**
+     * If the user has completed the maze or not.
+     */
     boolean winner;
 
 
