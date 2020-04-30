@@ -16,6 +16,9 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
      * a default value of 15).
      */
     Cell[][] mazeGrid;
+    /**
+     *Number of steps until solution.
+     */
     int difficulty;
     /**
      * Direction that the user is facing in the maze.
@@ -50,8 +53,13 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
      */
     boolean winner;
 
-
+    /**
+     * Default constructor that creates the 3D depiction of the maze.
+     * @param grid user inputted dimensions of the maze
+     * @param _difficulty number of steps of solution
+     */
     public GraphicInterface3D(Cell[][] grid, int _difficulty){
+        //Initialize fields.
         mazeGrid = grid;
         difficulty = _difficulty;
         direction = 2;
