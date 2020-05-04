@@ -41,12 +41,6 @@ public class Main {
             double finishTime = System.currentTimeMillis();
             double time = finishTime - startTime;
             Leaderboard leaderboard = new Leaderboard(frontPage.dimensions, time);
-//            while (!leaderboard.submitted) {
-//                try {
-//                    Thread.sleep(1000 / 60);
-//                } catch (InterruptedException e) {
-//                }
-//            }
         }
     }
 }

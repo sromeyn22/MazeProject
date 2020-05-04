@@ -84,7 +84,6 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         floor(g);
         mist(g);
         walls(g);
-        enemy(g);
         compass(g);
         
         //Draws a heart or an enemy in the current position of the user.
@@ -127,7 +126,8 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         }
         //Increase in health levels when collecting from heart.
         if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0 && life > 0){
-        
+
+
             if (life < 100) { life = life + 5; }
         }
          //User is out of life points, loses the maze.

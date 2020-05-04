@@ -1,23 +1,68 @@
+/**
+ * The maze class generates a random maze given the player's specifications from the main menu (dimensions
+ * of the maze, a seed for the maze, and if they want enemies).
+ */
+
 import java.util.Random;
 
 public class Maze {
+    /**
+     * A representation of the randomly generated maze as a 2D array of cells
+     */
     Cell[][] mazeGrid;
+    /**
+     * A measure of the difficulty of the maze (the length of the path from the start until the end)
+     */
     int difficulty;
-    static int key;
+    /**
+     * A seed for the maze specified by the player (if there is no seed specified, it will be randomly generated)
+     */
+    int key;
+    /**
+     * If the player wants enemies in the maze
+     */
     boolean ifEnemies;
+    /**
+     * A Random object to help generate the maze
+     */
     static Random rand;
+    /**
+     * The number of dimensions in the maze
+     */
     static int dimensions;
+    /**
+     *
+     */
     static int xPos;
+    /**
+     *
+     */
     static int yPos;
+    /**
+     *
+     */
     static int xStart;
+    /**
+     *
+     */
     static int yStart;
+    /**
+     *
+     */
     static BacktrackerDS ds = new BacktrackerDS();
 
 
+    /**
+     * This constructor initializes the maze given the parameters the player specified
+     * @param _dimensions the dimensions of the maze
+     * @param _key the seed for the maze
+     * @param ifEnemies if the player wants enemies in the maze
+     */
     public Maze (int _dimensions, int _key, boolean ifEnemies){
         dimensions = _dimensions;
         this.ifEnemies = ifEnemies;
         mazeGrid = new Cell[dimensions][dimensions];
+        // Iterate through each cell in the mazeGrid and initialize each one
         for (int column = 0; column < dimensions; column++) {
             for (int row = 0; row < dimensions; row++) {
                 mazeGrid[column][row] = new Cell();
@@ -26,6 +71,9 @@ public class Maze {
         key = _key;
     }
 
+    /**
+     * This method randomly generates the maze
+     */
     public void createMaze() {
         rand = new Random(key);
         xStart = rand.nextInt(dimensions);

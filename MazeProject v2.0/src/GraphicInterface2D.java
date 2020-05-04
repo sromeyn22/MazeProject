@@ -1,24 +1,60 @@
+/**
+ * This class creates the GUI in which the 2D maze is displayed. In the maze, the player can control their
+ * character using the arrow keys and the goal is to reach the bottom right corner of the maze. Enemies or health
+ * in the 3D maze are represented by a blue circle in the cell. The player can also display the solution to the maze
+ * by pressing '1' on the keyboard.
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GraphicInterface2D extends JPanel implements KeyListener {
+    /**
+     * A representation of the randomly generated maze as a 2D array of cells
+     */
     Cell[][] mazeGrid;
+    /**
+     * The pixel size of each cell in the maze to determine the frame size with
+     */
     int boxSize;
+    /**
+     * The x position of the player in the maze
+     */
     int xPosition;
+    /**
+     * The y position of the player in the maze
+     */
     int yPosition;
+    /**
+     * If the solution is displayed
+     */
     boolean solution;
-    int difficulty;
+    /**
+     * A measure of the difficulty of the maze (the length of the path from the start until the end)
+     */
+    //int difficulty;
+    /**
+     * The JFrame where the 2D maze is displayed
+     */
     JFrame frame2D;
 
+    /**
+     * The default constructor initializes the member fields and the JFrame that displays the maze
+     * @param grid the maze represented as a 2D array of cells
+     * @param _difficulty the difficulty of the maze
+     */
     public GraphicInterface2D(Cell[][] grid, int _difficulty) {
+        // initialize fields
         mazeGrid = grid;
-        difficulty = _difficulty;
+        //ifficulty = _difficulty;
         boxSize = 20;
         xPosition = 0;
         yPosition = 0;
         solution = false;
+
+        // initialize the frame
         frame2D = new JFrame("2D Maze");
         frame2D.setSize(boxSize*mazeGrid.length, boxSize*mazeGrid.length+20);
         frame2D.addKeyListener(this);
@@ -27,7 +63,10 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         frame2D.setContentPane(this);
     }
 
-
+    /**
+     * This method draws the maze and the player
+     * @param g the Graphics object
+     */
     public void paintComponent(Graphics g) {
 
         g.setColor(Color.WHITE);
@@ -102,12 +141,9 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         g.fillRect(mazeGrid.length*boxSize - boxSize, mazeGrid.length*boxSize - boxSize, boxSize, boxSize);
         g.setColor(Color.RED);
         g.fillRect(xPosition * boxSize + 2, yPosition * boxSize + 2, boxSize - 4, boxSize - 4);
-        g.drawString(Integer.toString(difficulty), mazeGrid.length*boxSize - 2*boxSize, boxSize);
+        //g.drawString(Integer.toString(difficulty), mazeGrid.length*boxSize - 2*boxSize, boxSize);
 
     }
-
-
-
 
 
     @Override
@@ -120,9 +156,15 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
 
     }
 
+    /**
+     * This method uses the KeyListener to update the player's position when they press one of the arrow keys
+     * or displays the solution when they press '1'.
+     * @param e tracks which key the user pressed
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            // allows the player to move right if there is no wall to their right
             if (!mazeGrid[xPosition][yPosition].RightWall)
                 xPosition++;
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -137,6 +179,7 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_1) {
             solution = !solution;
         }
+        // redraws the maze with the player's position now updated
         repaint();
     }
 }
