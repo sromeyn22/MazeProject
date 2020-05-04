@@ -233,9 +233,20 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         g2.fillRoundRect(tX, tY, tW, tH, 15, 15);
         g2.fillRoundRect(tX1, tY, tW, tH, 15, 15);
     }
-
-  
+/**
+     * Method that draws hearts.
+     * @param Graphics g object Graphics g
+     * @param int x1 x position of heart
+     * @param int x2 x position of heart
+     * @param int x3 x position of heart
+     * @param int y1 y position of heart
+     * @param int y2 y position of heart
+     * @param int y3 y position of heart
+     * @param int y4 y position of heart
+     */
     public void drawHeart(Graphics g, int x1, int x2, int x3, int y1, int y2, int y3, int y4) {
+        
+       // Shading on heart depending on direction.
         Color one = new Color(0, 0, 0);
         Color two = new Color(0, 0, 0);
         Color three = new Color(0, 0, 0);
@@ -286,6 +297,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     */
     public void compass(Graphics g) {
         
+        // Direction of compass arrow depending on direction.
         double v = 0;
         double u = 0;
         if (xPosition != mazeGrid.length-1 || yPosition != mazeGrid.length-1){
@@ -308,7 +320,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             }
         }
 
-
+        // Colors and drawing of compass.
         Color orange = new Color(217, 135, 5);
         Color grey = new Color(110, 108, 100);
         Color white = new Color(230, 218, 197);
@@ -333,6 +345,12 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         g2.draw(new Line2D.Double(609, 608.5, 609+v, 608.5+u));
     }
 
+  /**
+    *Method that determines whether enemy or heart is drawn.
+    * @param int Xuse x position of enemy or heart
+    * @param int Yuse y position of enemy or heart
+    * @return int ToReturn determines shading of walls.
+    */
     private int EnemyorHealth(int Xuse, int Yuse){
         int ToReturn = 0;
         try{
@@ -345,7 +363,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         }
         return ToReturn;
     }
-
+    
+  /**
+    *Method that draws walls of maze.
+    * @param g object Graphics g
+    */
     private void walls(Graphics g) {
         if(displayWalls[0]){
             g.setColor(backWalls());
@@ -360,6 +382,8 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             int[] yPoints = {440, 440, 500};
             g.fillPolygon(xPoints, yPoints, 3);
         }
+        
+        // Visible cells, draws enemy or heart if in cell.
         if(farcells[0] == 1){
             drawHeart(g, 141, 170, 199, 350, 405, 416, 460);
         } else if (farcells[0] == -1){
@@ -382,6 +406,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillPolygon(xPoints, yPoints, 4);
 
         }
+        // Visible cells, draws enemy or heart if in cell.
         if(farcells[1] == 1){
             drawHeart(g, 321, 350, 379, 350, 405, 416, 460);
         } else if (farcells[1] == -1){
@@ -404,6 +429,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillPolygon(xPoints, yPoints, 3);
 
         }
+        // Visible cells, draws enemy or heart if in cell.
         if(farcells[2] == 1){
             drawHeart(g, 501, 530, 559, 350, 405, 416, 460);
         } else if (farcells[2] == -1){
@@ -461,6 +487,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillRect(0, 200, 200, 300);
 
         }
+        // Visible cells, draws enemy or heart if in cell.
         if(farcells[3] == 1){
             drawHeart(g, 3, 50, 97, 350, 438, 456, 525);
         } else if (farcells[3] == -1){
@@ -475,6 +502,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
 
         }
+        // Visible cells, draws enemy or heart if in cell.
         if(farcells[4] == 1){
             drawHeart(g, 303, 350, 397, 350, 438, 456, 525);
         } else if (farcells[4] == -1){
@@ -489,6 +517,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
 
         }
+        // Visible cells, draws enemy or heart if in cell.
         if(farcells[5] == 1){
             drawHeart(g, 603, 650, 697, 350, 438, 456, 525);
         } else if (farcells[5] == -1){
@@ -521,6 +550,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillRect(135, 135, 430, 430);
 
         }
+       // Visible cells, draws enemy or heart if in cell. 
         if(farcells[6] == 1){
             drawHeart(g, 286, 350, 414, 350, 470, 494, 590);
         } else if (farcells[6] == -1){
@@ -576,6 +606,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillPolygon(xPoints, yPoints, 4);
         }
     }
+    
+   /**
+   * Method that determines shading of walls depending on direction.
+   * @return int ToReturn determines shading of walls.
+   */
     private Color backWalls(){
         Color toReturn = new Color(0,0,0);
         Color darkest = new Color(0, 50, 150);
@@ -632,8 +667,11 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         return toReturn;
 
     }
-
-
+    
+    /**
+     * Method that draws mist.
+     * @param g object Graphics g
+     */
     private void mist(Graphics g) {
         for (int i = 0; i < 50000; i++){
             int x = (int) (Math.random()*(700+20)-10);
@@ -650,6 +688,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         }
     }
 
+    /**
+     * Method that draws floor. The closer the user is to the finish, the darker the red of the floor becomes.
+     * @param g object Graphics g
+     */
     private void floor(Graphics g) {
         if(xPosition == (mazeGrid.length-1) && yPosition == (mazeGrid.length-1)){
             g.setColor(Color.GREEN);
@@ -666,7 +708,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         g.drawLine(0, 635, 700, 635);
     }
 
-
+    /**
+     * Method that determines shading/which walls to draw.
+     * @return int toReturn determines shading of the walls.
+     */
     public boolean[] whichWallsToDraw(){
         boolean[] toReturn = new boolean [22];
         if (direction == 0 ){
@@ -682,7 +727,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         }
         return toReturn;
     }
-
+    
     private boolean[] left(boolean[] walls) {
         walls[0] = WallOnOff(3,xPosition-3, yPosition+1);
         farcells[0] = EnemyorHealth(xPosition-3, yPosition+1);
