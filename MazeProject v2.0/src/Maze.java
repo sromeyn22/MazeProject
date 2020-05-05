@@ -39,7 +39,7 @@ public class Maze {
      */
     static int yPos;
     /**
-     * The random starting location of the maze generator
+     * The random x coordinate of the starting location of the maze generator
      */
     static int xStart;
     /**
@@ -47,7 +47,8 @@ public class Maze {
      */
     static int yStart;
     /**
-     *
+     * A modified linked list that stores which cells the maze generator has already visited so it can
+     * backtrack when it reaches a dead end
      */
     static BacktrackerDS ds = new BacktrackerDS();
 
@@ -169,9 +170,9 @@ public class Maze {
     }
 
 
-    /*
-    ** This method is used when finding the solution, it chooses a neighbor that hasn't been visited and there is no wall between the cells,
-    ** It will backtrack to the previous cell if it can't move to one of its neighbors
+    /**
+    * This method is used when finding the solution, it chooses a neighbor that hasn't been visited and there is no wall between the cells,
+    * It will backtrack to the previous cell if it can't move to one of its neighbors
     */
     private void ChooseNeighborSolution() {
         if(xPos == mazeGrid.length-1 && yPos == mazeGrid.length-1){
@@ -204,8 +205,8 @@ public class Maze {
 
     }
 
-    /*
-    ** This method returns a boolean array telling the ChooseNeighborSolution() method which cells it can move to
+    /**
+    * This method returns a boolean array telling the ChooseNeighborSolution() method which cells it can move to
     */
     private boolean[] getNeighborsSolution() {
         // a, b, c, d correspond to cell above, cell to the right, cell below, cell to the left respectively.
@@ -287,8 +288,8 @@ public class Maze {
 
     }
        
-    /*
-    ** This method returns a boolean array telling the ChooseNeighbor() method which cells it can move to
+    /**
+    * This method returns a boolean array telling the ChooseNeighbor() method which cells it can move to
     */
     public boolean[] getNeighbors(){
         // a, b, c, d correspond to cell above, cell to the right, cell below, cell to the left respectively.
