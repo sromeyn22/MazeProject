@@ -76,7 +76,7 @@ public class Maze {
      * It starts at a random cell, marks that cell as visited, checks to see which cells around it haven't been visited,
      * chooses one of the surrounding cells randomly, and gets rid of the walls between the two cells.
      * If the cell it is in has no unvisited neighbors, it will pop from the backtracker, moving back to the cell it was just in.
-     * The next part of this method finds the solution to the mazz starting at the start; (0, 0) and ending at the end; (gridlength - 1, grid length - 1)
+     * The next part of this method finds the solution to the maze starting at the start; (0, 0) and ending at the end; (gridlength - 1, grid length - 1)
      * It randomly chooses a neighboring cell that hasn't been visited and there isn't a wall inbetween the two cells.
      * It also uses the backtrackerDS for when it gets stuck at a dead end.
      * The last part of the method randomly chooses cells to have enemies or hearts
