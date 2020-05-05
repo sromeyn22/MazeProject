@@ -225,9 +225,9 @@ public class Maze {
         return new boolean[]{a, b, c, d};
     }
 
-    /*
-    ** This method is used when creating the maze, it chooses a neighbor that hasn't been visited,
-    ** It will backtrack to the previous cell if it can't move to one of its neighbors
+    /**
+    * This method is used when creating the maze, it chooses a neighbor that hasn't been visited,
+    * It will backtrack to the previous cell if it can't move to one of its neighbors
     */
     public void ChooseNeighbor(){
 

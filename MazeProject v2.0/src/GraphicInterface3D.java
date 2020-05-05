@@ -739,9 +739,9 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         return toReturn;
     }
     
-    /*
-    ** the next four methods determine what walls, enemies, or health to draw depending on which directon you are looking by checking the cells to the left, infront, and to the right
-    ** three rows infront of your current position.
+    /**
+    * the next four methods determine what walls, enemies, or health to draw depending on which directon you are looking by checking the cells to the left, infront, and to the right
+    * three rows infront of your current position.
     */
     private boolean[] left(boolean[] walls) {
         walls[0] = WallOnOff(3,xPosition-3, yPosition+1);
@@ -876,8 +876,8 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     }
 
-    /*
-    ** this method tells you whether a given wall should be drawn in the 3d rendering of the maze
+    /**
+    * This method tells you whether a given wall should be drawn in the 3d rendering of the maze
     */
     private boolean WallOnOff(int wall, int Xuse, int Yuse){
         boolean ToReturn = false;
