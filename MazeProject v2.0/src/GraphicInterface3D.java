@@ -114,7 +114,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         g.setColor(Color.GREEN);
         g.fillRect(50, 650, life, 10);
         
-        //Decrease in health levels when enemy continues to be in frame.
+        //Decrease in your health levels when enemy continues to be in frame.
         if(mazeGrid[xPosition][yPosition].enemy && mazeGrid[xPosition][yPosition].life > 0 && life > 0){
             life = life - 5;
             try{
@@ -124,7 +124,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             }
             repaint();
         }
-        //Increase in health levels when collecting from heart.
+        //Increase in your health levels when collecting from heart.
         if(mazeGrid[xPosition][yPosition].heart && mazeGrid[xPosition][yPosition].life > 0 && life > 0){
 
 
@@ -346,7 +346,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     }
 
   /**
-    *Method that determines whether enemy or heart is drawn.
+    *Method that determines whether enemy or heart should be drawn.
     * @param Xuse x position of enemy or heart
     * @param Yuse y position of enemy or heart
     * @return int ToReturn determines shading of walls.
@@ -366,6 +366,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     
   /**
     *Method that draws walls of maze.
+    * there are 22 walls in the 3d rendering, each wall is drawn individually, starting with the walls three cells infront of you, then 2, then 1, and then the cell you are in
     * @param g object Graphics g
     */
     private void walls(Graphics g) {
@@ -608,7 +609,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     }
     
    /**
-   * Method that determines shading of walls depending on direction.
+   * Methods that determines shading of walls depending on direction.
    * @return int ToReturn determines shading of walls.
    */
     private Color backWalls(){
@@ -728,6 +729,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         return toReturn;
     }
     
+    /*
+    ** the next four methods determine what walls, enemies, or health to draw depending on which directon you are looking by checking the cells to the left, infront, and to the right
+    ** three rows infront of your current position.
+    */
     private boolean[] left(boolean[] walls) {
         walls[0] = WallOnOff(3,xPosition-3, yPosition+1);
         farcells[0] = EnemyorHealth(xPosition-3, yPosition+1);
@@ -861,6 +866,9 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     }
 
+    /*
+    ** this method tells you whether a given wall should be drawn in the 3d rendering of the maze
+    */
     private boolean WallOnOff(int wall, int Xuse, int Yuse){
         boolean ToReturn = false;
         try{
@@ -886,6 +894,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        // by pressing the space bar you attack enemies lowering their life or you can get life from health cells
         if(life > 0){
             if(e.getKeyCode() == KeyEvent.VK_SPACE && mazeGrid[xPosition][yPosition].life > 0){
                 mazeGrid[xPosition][yPosition].life--;
@@ -899,10 +908,13 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         if(life > 0){
+            // if the enemy is still alive in the cell, then break and redraw the enemy with its current health meaning you can't move
+            // you are trapped in the cell if the enemy is alive
             if(mazeGrid[xPosition][yPosition].life > 0 && mazeGrid[xPosition][yPosition].enemy){
                 repaint();
                 return;
             }
+            // arrow key right to move right if there are no walls
             if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
                 if(direction == 3 && !WallOnOff(0, xPosition, yPosition)){
                     yPosition--;
@@ -913,6 +925,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                 } else if(direction == 2 && !WallOnOff(3, xPosition, yPosition)){
                     xPosition--;
                 }
+            // arrow key left to move left if there are no walls
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
                 if(direction == 1 && !WallOnOff(0, xPosition, yPosition)){
                     yPosition--;
@@ -923,6 +936,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                 } else if(direction == 0 && !WallOnOff(3, xPosition, yPosition)){
                     xPosition--;
                 }
+            // arrow key up to move up if there are no walls
             } else if (e.getKeyCode() == KeyEvent.VK_UP ) {
                 if(direction == 0 && !WallOnOff(0, xPosition, yPosition)){
                     yPosition--;
@@ -933,6 +947,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                 } else if(direction == 3 && !WallOnOff(3, xPosition, yPosition)){
                     xPosition--;
                 }
+            // arrow key down to move down if there are no walls
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN){
                 if(direction == 2 && !WallOnOff(0, xPosition, yPosition)){
                     yPosition--;
@@ -943,12 +958,14 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                 } else if(direction == 1 && !WallOnOff(3, xPosition, yPosition)){
                     xPosition--;
                 }
+            // press a to turn left
             }else if (e.getKeyCode() == KeyEvent.VK_A) {
                 if(direction == 0){
                     direction = 3;
                 } else{
                     direction--;
                 }
+            // press d to turn right
             }else if (e.getKeyCode() == KeyEvent.VK_D) {
                 if(direction == 3){
                     direction = 0;
@@ -956,6 +973,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                     direction++;
                 }
             }
+            // change which walls should be displayed after you change your position of the direction you are facing
             if(direction == 0){
                 displayWalls = up(displayWalls);
             } else if(direction == 1){
