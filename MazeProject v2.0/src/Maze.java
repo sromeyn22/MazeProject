@@ -73,13 +73,23 @@ public class Maze {
 
     /**
      * This method randomly generates the maze
+     * It starts at a random cell, marks that cell as visited, checks to see which cells around it haven't been visited,
+     * chooses one of the surrounding cells randomly, and gets rid of the walls between the two cells.
+     * If the cell it is in has no unvisited neighbors, it will pop from the backtracker, moving back to the cell it was just in.
+     * The next part of this method finds the solution to the mazz starting at the start; (0, 0) and ending at the end; (gridlength - 1, grid length - 1)
+     * It randomly chooses a neighboring cell that hasn't been visited and there isn't a wall inbetween the two cells.
+     * It also uses the backtrackerDS for when it gets stuck at a dead end.
+     * The last part of the method randomly chooses cells to have enemies or hearts
      */
     public void createMaze() {
+        // choose random cell
         rand = new Random(key);
         xStart = rand.nextInt(dimensions);
         yStart = rand.nextInt(dimensions);
         xPos = xStart;
         yPos = yStart;
+        
+        // 
         while (true){
             //ui.triggerMove();
             if (mazeGrid[xPos][yPos].UnVisited){
@@ -159,7 +169,10 @@ public class Maze {
     }
 
 
-    
+    /*
+    ** This method is used when finding the solution, it chooses a neighbor that hasn't been visited and there is no wall between the cells,
+    ** It will backtrack to the previous cell if it can't move to one of its neighbors
+    */
     private void ChooseNeighborSolution() {
         if(xPos == mazeGrid.length-1 && yPos == mazeGrid.length-1){
             return;
@@ -191,30 +204,35 @@ public class Maze {
 
     }
 
+    /*
+    ** This method returns a boolean array telling the ChooseNeighborSolution() method which cells it can move to
+    */
     private boolean[] getNeighborsSolution() {
+        // a, b, c, d correspond to cell above, cell to the right, cell below, cell to the left respectively.
         boolean a;
         boolean b;
         boolean c;
         boolean d;
-
+        
+        // if it is on the top row there is no cell above
         if (yPos == 0){
             a = false;
         } else {
             a = !mazeGrid[xPos][yPos].UpWall && mazeGrid[xPos][yPos-1].UnVisited;
         }
-
+        // if it is on the right wall no cell to the right
         if (xPos == mazeGrid.length-1){
             b = false;
         } else {
             b = !mazeGrid[xPos][yPos].RightWall && mazeGrid[xPos+1][yPos].UnVisited;
         }
-
+        // if it is on the bottom row no cell below
         if (yPos == mazeGrid.length-1){
             c = false;
         } else {
             c = !mazeGrid[xPos][yPos].DownWall && mazeGrid[xPos][yPos+1].UnVisited;
         }
-
+        // if it is on the left wall no cell to the left
         if (xPos == 0){
             d = false;
         } else {
@@ -224,9 +242,14 @@ public class Maze {
         return new boolean[]{a, b, c, d};
     }
 
+    /*
+    ** This method is used when creating the maze, it chooses a neighbor that hasn't been visited,
+    ** It will backtrack to the previous cell if it can't move to one of its neighbors
+    */
     public void ChooseNeighbor(){
 
         boolean[] arrNeighbors = getNeighbors();
+        // if all the neighboring cells have been visited back track
         if (!arrNeighbors[0] && !arrNeighbors[1] && !arrNeighbors[2] && !arrNeighbors[3]){
             ds.pop();
             xPos = ds.returnx(xPos);
@@ -236,13 +259,14 @@ public class Maze {
             }
             return;
         }
-
+        // choose a random unvisited neighbor
         boolean test = false;
         int random = 4;
         while (!test) {
             random = rand.nextInt(4);
             test = arrNeighbors[random];
         }
+        // delete walls and move to next cell
         if(random == 0){
             mazeGrid[xPos][yPos].UpWall = false;
             yPos--;
@@ -262,8 +286,12 @@ public class Maze {
         }
 
     }
-
+       
+    /*
+    ** This method returns a boolean array telling the ChooseNeighbor() method which cells it can move to
+    */
     public boolean[] getNeighbors(){
+        // a, b, c, d correspond to cell above, cell to the right, cell below, cell to the left respectively.
         boolean a;
         boolean b;
         boolean c;
