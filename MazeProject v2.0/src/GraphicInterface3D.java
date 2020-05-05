@@ -80,7 +80,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
      * @param g object Graphics g.
      */
     public void paintComponent(Graphics g){
-        displayWalls = whichWallsToDraw();
+        whichWallsToDraw();
         floor(g);
         mist(g);
         walls(g);
@@ -720,159 +720,152 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     }
 
     /**
-     * Method that determines shading/which walls to draw.
-     * @return int toReturn determines shading of the walls.
+     * Method edits boolean array that determines whether or not to draw a wall in the display method
      */
-    public boolean[] whichWallsToDraw(){
-        boolean[] toReturn = new boolean [22];
+    public void whichWallsToDraw(){
         if (direction == 0 ){
-            toReturn = up(toReturn);
+            up();
         } else if (direction == 1 ){
-            toReturn = right(toReturn);
+            right();
         } else
         if (direction == 2 ){
-            toReturn = down(toReturn);
+            down();
         } else
         if (direction == 3 ){
-            toReturn = left(toReturn);
+            left();
         }
-        return toReturn;
     }
     
     /*
     ** the next four methods determine what walls, enemies, or health to draw depending on which directon you are looking by checking the cells to the left, infront, and to the right
     ** three rows infront of your current position.
     */
-    private boolean[] left(boolean[] walls) {
-        walls[0] = WallOnOff(3,xPosition-3, yPosition+1);
+    private void left() {
+        displayWalls[0] = WallOnOff(3,xPosition-3, yPosition+1);
         farcells[0] = EnemyorHealth(xPosition-3, yPosition+1);
-        walls[1] = WallOnOff(3,xPosition-3, yPosition);
+        displayWalls[1] = WallOnOff(3,xPosition-3, yPosition);
         farcells[1] = EnemyorHealth(xPosition-3, yPosition);
-        walls[2] = WallOnOff(3,xPosition-3, yPosition-1);
+        displayWalls[2] = WallOnOff(3,xPosition-3, yPosition-1);
         farcells[2] = EnemyorHealth(xPosition-3, yPosition-1);
-        walls[3] = WallOnOff(2,xPosition-3, yPosition+1);
-        walls[4] = WallOnOff(2,xPosition-3, yPosition);
-        walls[5] = WallOnOff(0,xPosition-3, yPosition);
-        walls[6] = WallOnOff(0,xPosition-3, yPosition-1);
-        walls[7] = WallOnOff(3,xPosition-2, yPosition+1);
+        displayWalls[3] = WallOnOff(2,xPosition-3, yPosition+1);
+        displayWalls[4] = WallOnOff(2,xPosition-3, yPosition);
+        displayWalls[5] = WallOnOff(0,xPosition-3, yPosition);
+        displayWalls[6] = WallOnOff(0,xPosition-3, yPosition-1);
+        displayWalls[7] = WallOnOff(3,xPosition-2, yPosition+1);
         farcells[3] = EnemyorHealth(xPosition-2, yPosition+1);
-        walls[8] = WallOnOff(3,xPosition-2, yPosition);
+        displayWalls[8] = WallOnOff(3,xPosition-2, yPosition);
         farcells[4] = EnemyorHealth(xPosition-2, yPosition);
-        walls[9] = WallOnOff(3,xPosition-2, yPosition-1);
+        displayWalls[9] = WallOnOff(3,xPosition-2, yPosition-1);
         farcells[5] = EnemyorHealth(xPosition-2, yPosition-1);
-        walls[10] = WallOnOff(2,xPosition-2, yPosition);
-        walls[11] = WallOnOff(0,xPosition-2, yPosition);
-        walls[12] = WallOnOff(3,xPosition-1, yPosition+1);
-        walls[13] = WallOnOff(3,xPosition-1, yPosition);
+        displayWalls[10] = WallOnOff(2,xPosition-2, yPosition);
+        displayWalls[11] = WallOnOff(0,xPosition-2, yPosition);
+        displayWalls[12] = WallOnOff(3,xPosition-1, yPosition+1);
+        displayWalls[13] = WallOnOff(3,xPosition-1, yPosition);
         farcells[6] = EnemyorHealth(xPosition-1, yPosition);
-        walls[14] = WallOnOff(3,xPosition-1, yPosition-1);
-        walls[15] = WallOnOff(2,xPosition-1, yPosition);
-        walls[16] = WallOnOff(0,xPosition-1, yPosition);
-        walls[17] = WallOnOff(3,xPosition, yPosition+1);
-        walls[18] = WallOnOff(3,xPosition, yPosition);
-        walls[19] = WallOnOff(3,xPosition, yPosition-1);
-        walls[20] = WallOnOff(2,xPosition, yPosition);
-        walls[21] = WallOnOff(0,xPosition, yPosition);
-        return walls;
+        displayWalls[14] = WallOnOff(3,xPosition-1, yPosition-1);
+        displayWalls[15] = WallOnOff(2,xPosition-1, yPosition);
+        displayWalls[16] = WallOnOff(0,xPosition-1, yPosition);
+        displayWalls[17] = WallOnOff(3,xPosition, yPosition+1);
+        displayWalls[18] = WallOnOff(3,xPosition, yPosition);
+        displayWalls[19] = WallOnOff(3,xPosition, yPosition-1);
+        displayWalls[20] = WallOnOff(2,xPosition, yPosition);
+        displayWalls[21] = WallOnOff(0,xPosition, yPosition);
     }
 
-    private boolean[] down(boolean[] walls) {
-        walls[0] = WallOnOff(2, xPosition+1, yPosition+3);
+    private void down() {
+        displayWalls[0] = WallOnOff(2, xPosition+1, yPosition+3);
         farcells[0] = EnemyorHealth(xPosition+1, yPosition+3);
-        walls[1] = WallOnOff(2, xPosition, yPosition+3);
+        displayWalls[1] = WallOnOff(2, xPosition, yPosition+3);
         farcells[1] = EnemyorHealth(xPosition, yPosition+3);
-        walls[2] = WallOnOff(2, xPosition-1, yPosition+3);
+        displayWalls[2] = WallOnOff(2, xPosition-1, yPosition+3);
         farcells[2] = EnemyorHealth(xPosition-1, yPosition+3);
-        walls[3] = WallOnOff(1, xPosition+1, yPosition+3);
-        walls[4] = WallOnOff(1, xPosition, yPosition+3);
-        walls[5] = WallOnOff(3, xPosition, yPosition+3);
-        walls[6] = WallOnOff(3, xPosition-1, yPosition+3);
-        walls[7] = WallOnOff(2, xPosition+1, yPosition+2);
+        displayWalls[3] = WallOnOff(1, xPosition+1, yPosition+3);
+        displayWalls[4] = WallOnOff(1, xPosition, yPosition+3);
+        displayWalls[5] = WallOnOff(3, xPosition, yPosition+3);
+        displayWalls[6] = WallOnOff(3, xPosition-1, yPosition+3);
+        displayWalls[7] = WallOnOff(2, xPosition+1, yPosition+2);
         farcells[3] = EnemyorHealth(xPosition+1, yPosition+2);
-        walls[8] = WallOnOff(2, xPosition, yPosition+2);
+        displayWalls[8] = WallOnOff(2, xPosition, yPosition+2);
         farcells[4] = EnemyorHealth(xPosition, yPosition+2);
-        walls[9] = WallOnOff(2, xPosition-1, yPosition+2);
+        displayWalls[9] = WallOnOff(2, xPosition-1, yPosition+2);
         farcells[5] = EnemyorHealth(xPosition-1, yPosition+2);
-        walls[10] = WallOnOff(1, xPosition, yPosition+2);
-        walls[11] = WallOnOff(3, xPosition, yPosition+2);
-        walls[12] = WallOnOff(2, xPosition+1, yPosition+1);
-        walls[13] = WallOnOff(2, xPosition, yPosition+1);
+        displayWalls[10] = WallOnOff(1, xPosition, yPosition+2);
+        displayWalls[11] = WallOnOff(3, xPosition, yPosition+2);
+        displayWalls[12] = WallOnOff(2, xPosition+1, yPosition+1);
+        displayWalls[13] = WallOnOff(2, xPosition, yPosition+1);
         farcells[6] = EnemyorHealth(xPosition, yPosition+1);
-        walls[14] = WallOnOff(2, xPosition-1, yPosition+1);
-        walls[15] = WallOnOff(1, xPosition, yPosition+1);
-        walls[16] = WallOnOff(3, xPosition, yPosition+1);
-        walls[17] = WallOnOff(2, xPosition+1, yPosition);
-        walls[18] = WallOnOff(2, xPosition, yPosition);
-        walls[19] = WallOnOff(2, xPosition-1, yPosition);
-        walls[20] = WallOnOff(1, xPosition, yPosition);
-        walls[21] = WallOnOff(3, xPosition, yPosition);
-        return walls;
+        displayWalls[14] = WallOnOff(2, xPosition-1, yPosition+1);
+        displayWalls[15] = WallOnOff(1, xPosition, yPosition+1);
+        displayWalls[16] = WallOnOff(3, xPosition, yPosition+1);
+        displayWalls[17] = WallOnOff(2, xPosition+1, yPosition);
+        displayWalls[18] = WallOnOff(2, xPosition, yPosition);
+        displayWalls[19] = WallOnOff(2, xPosition-1, yPosition);
+        displayWalls[20] = WallOnOff(1, xPosition, yPosition);
+        displayWalls[21] = WallOnOff(3, xPosition, yPosition);
     }
 
-    private boolean[] right(boolean[] walls) {
-        walls[0] = WallOnOff(1,xPosition+3, yPosition-1);
+    private void right() {
+        displayWalls[0] = WallOnOff(1,xPosition+3, yPosition-1);
         farcells[0] = EnemyorHealth(xPosition+3, yPosition-1);
-        walls[1] = WallOnOff(1,xPosition+3, yPosition);
+        displayWalls[1] = WallOnOff(1,xPosition+3, yPosition);
         farcells[1] = EnemyorHealth(xPosition+3, yPosition);
-        walls[2] = WallOnOff(1,xPosition+3, yPosition+1);
+        displayWalls[2] = WallOnOff(1,xPosition+3, yPosition+1);
         farcells[2] = EnemyorHealth(xPosition+3, yPosition+1);
-        walls[3] = WallOnOff(0,xPosition+3, yPosition-1);
-        walls[4] = WallOnOff(0,xPosition+3, yPosition);
-        walls[5] = WallOnOff(2,xPosition+3, yPosition);
-        walls[6] = WallOnOff(2,xPosition+3, yPosition+1);
-        walls[7] = WallOnOff(1,xPosition+2, yPosition-1);
+        displayWalls[3] = WallOnOff(0,xPosition+3, yPosition-1);
+        displayWalls[4] = WallOnOff(0,xPosition+3, yPosition);
+        displayWalls[5] = WallOnOff(2,xPosition+3, yPosition);
+        displayWalls[6] = WallOnOff(2,xPosition+3, yPosition+1);
+        displayWalls[7] = WallOnOff(1,xPosition+2, yPosition-1);
         farcells[3] = EnemyorHealth(xPosition+2, yPosition-1);
-        walls[8] = WallOnOff(1,xPosition+2, yPosition);
+        displayWalls[8] = WallOnOff(1,xPosition+2, yPosition);
         farcells[4] = EnemyorHealth(xPosition+2, yPosition);
-        walls[9] = WallOnOff(1,xPosition+2, yPosition+1);
+        displayWalls[9] = WallOnOff(1,xPosition+2, yPosition+1);
         farcells[5] = EnemyorHealth(xPosition+2, yPosition+1);
-        walls[10] = WallOnOff(0,xPosition+2, yPosition);
-        walls[11] = WallOnOff(2,xPosition+2, yPosition);
-        walls[12] = WallOnOff(1,xPosition+1, yPosition-1);
-        walls[13] = WallOnOff(1,xPosition+1, yPosition);
+        displayWalls[10] = WallOnOff(0,xPosition+2, yPosition);
+        displayWalls[11] = WallOnOff(2,xPosition+2, yPosition);
+        displayWalls[12] = WallOnOff(1,xPosition+1, yPosition-1);
+        displayWalls[13] = WallOnOff(1,xPosition+1, yPosition);
         farcells[6] = EnemyorHealth(xPosition+1, yPosition);
-        walls[14] = WallOnOff(1,xPosition+1, yPosition+1);
-        walls[15] = WallOnOff(0,xPosition+1, yPosition);
-        walls[16] = WallOnOff(2,xPosition+1, yPosition);
-        walls[17] = WallOnOff(1,xPosition, yPosition-1);
-        walls[18] = WallOnOff(1,xPosition, yPosition);
-        walls[19] = WallOnOff(1,xPosition, yPosition+1);
-        walls[20] = WallOnOff(0,xPosition, yPosition);
-        walls[21] = WallOnOff(2,xPosition, yPosition);
-        return walls;
+        displayWalls[14] = WallOnOff(1,xPosition+1, yPosition+1);
+        displayWalls[15] = WallOnOff(0,xPosition+1, yPosition);
+        displayWalls[16] = WallOnOff(2,xPosition+1, yPosition);
+        displayWalls[17] = WallOnOff(1,xPosition, yPosition-1);
+        displayWalls[18] = WallOnOff(1,xPosition, yPosition);
+        displayWalls[19] = WallOnOff(1,xPosition, yPosition+1);
+        displayWalls[20] = WallOnOff(0,xPosition, yPosition);
+        displayWalls[21] = WallOnOff(2,xPosition, yPosition);
     }
 
-    private boolean[] up(boolean[] walls) {
-        walls[0] = WallOnOff(0, xPosition-1, yPosition-3);
+    private void up() {
+        displayWalls[0] = WallOnOff(0, xPosition-1, yPosition-3);
         farcells[0] = EnemyorHealth(xPosition-1, yPosition-3);
-        walls[1] = WallOnOff(0, xPosition, yPosition-3);
+        displayWalls[1] = WallOnOff(0, xPosition, yPosition-3);
         farcells[1] = EnemyorHealth(xPosition, yPosition-3);
-        walls[2] = WallOnOff(0, xPosition+1, yPosition-3);
+        displayWalls[2] = WallOnOff(0, xPosition+1, yPosition-3);
         farcells[2] = EnemyorHealth(xPosition+1, yPosition-3);
-        walls[3] = WallOnOff(3, xPosition-1, yPosition-3);
-        walls[4] = WallOnOff(3, xPosition, yPosition-3);
-        walls[5] = WallOnOff(1, xPosition, yPosition-3);
-        walls[6] = WallOnOff(1, xPosition+1, yPosition-3);
-        walls[7] = WallOnOff(0, xPosition-1, yPosition-2);
+        displayWalls[3] = WallOnOff(3, xPosition-1, yPosition-3);
+        displayWalls[4] = WallOnOff(3, xPosition, yPosition-3);
+        displayWalls[5] = WallOnOff(1, xPosition, yPosition-3);
+        displayWalls[6] = WallOnOff(1, xPosition+1, yPosition-3);
+        displayWalls[7] = WallOnOff(0, xPosition-1, yPosition-2);
         farcells[3] = EnemyorHealth(xPosition-1, yPosition-2);
-        walls[8] = WallOnOff(0, xPosition, yPosition-2);
+        displayWalls[8] = WallOnOff(0, xPosition, yPosition-2);
         farcells[4] = EnemyorHealth(xPosition, yPosition-2);
-        walls[9] = WallOnOff(0, xPosition+1, yPosition-2);
+        displayWalls[9] = WallOnOff(0, xPosition+1, yPosition-2);
         farcells[5] = EnemyorHealth(xPosition+1, yPosition-2);
-        walls[10] = WallOnOff(3, xPosition, yPosition-2);
-        walls[11] = WallOnOff(1, xPosition, yPosition-2);
-        walls[12] = WallOnOff(0, xPosition-1, yPosition-1);
-        walls[13] = WallOnOff(0, xPosition, yPosition-1);
+        displayWalls[10] = WallOnOff(3, xPosition, yPosition-2);
+        displayWalls[11] = WallOnOff(1, xPosition, yPosition-2);
+        displayWalls[12] = WallOnOff(0, xPosition-1, yPosition-1);
+        displayWalls[13] = WallOnOff(0, xPosition, yPosition-1);
         farcells[6] = EnemyorHealth(xPosition, yPosition-1);
-        walls[14] = WallOnOff(0, xPosition+1, yPosition-1);
-        walls[15] = WallOnOff(3, xPosition, yPosition-1);
-        walls[16] = WallOnOff(1, xPosition, yPosition-1);
-        walls[17] = WallOnOff(0, xPosition-1, yPosition);
-        walls[18] = WallOnOff(0, xPosition, yPosition);
-        walls[19] = WallOnOff(0, xPosition+1, yPosition);
-        walls[20] = WallOnOff(3, xPosition, yPosition);
-        walls[21] = WallOnOff(1, xPosition, yPosition);
-        return walls;
+        displayWalls[14] = WallOnOff(0, xPosition+1, yPosition-1);
+        displayWalls[15] = WallOnOff(3, xPosition, yPosition-1);
+        displayWalls[16] = WallOnOff(1, xPosition, yPosition-1);
+        displayWalls[17] = WallOnOff(0, xPosition-1, yPosition);
+        displayWalls[18] = WallOnOff(0, xPosition, yPosition);
+        displayWalls[19] = WallOnOff(0, xPosition+1, yPosition);
+        displayWalls[20] = WallOnOff(3, xPosition, yPosition);
+        displayWalls[21] = WallOnOff(1, xPosition, yPosition);
 
     }
 
