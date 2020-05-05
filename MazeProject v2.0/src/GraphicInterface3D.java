@@ -235,14 +235,14 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     }
 /**
      * Method that draws hearts.
-     * @param Graphics g object Graphics g
-     * @param int x1 x position of heart
-     * @param int x2 x position of heart
-     * @param int x3 x position of heart
-     * @param int y1 y position of heart
-     * @param int y2 y position of heart
-     * @param int y3 y position of heart
-     * @param int y4 y position of heart
+     * @param g object Graphics g
+     * @param x1 x position of heart
+     * @param x2 x position of heart
+     * @param x3 x position of heart
+     * @param y1 y position of heart
+     * @param y2 y position of heart
+     * @param y3 y position of heart
+     * @param y4 y position of heart
      */
     public void drawHeart(Graphics g, int x1, int x2, int x3, int y1, int y2, int y3, int y4) {
         
@@ -347,8 +347,8 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
   /**
     *Method that determines whether enemy or heart is drawn.
-    * @param int Xuse x position of enemy or heart
-    * @param int Yuse y position of enemy or heart
+    * @param Xuse x position of enemy or heart
+    * @param Yuse y position of enemy or heart
     * @return int ToReturn determines shading of walls.
     */
     private int EnemyorHealth(int Xuse, int Yuse){

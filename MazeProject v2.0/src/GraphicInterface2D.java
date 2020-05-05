@@ -48,7 +48,7 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
     public GraphicInterface2D(Cell[][] grid, int _difficulty) {
         // initialize fields
         mazeGrid = grid;
-        //ifficulty = _difficulty;
+        //difficulty = _difficulty;
         boxSize = 20;
         xPosition = 0;
         yPosition = 0;
@@ -69,8 +69,10 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
      */
     public void paintComponent(Graphics g) {
 
+        // makes the background of the frame white
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, mazeGrid.length*boxSize, mazeGrid.length*boxSize);
+        // draws the borders of the frame
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, mazeGrid.length*boxSize, 3);
         g.fillRect(mazeGrid.length*boxSize - 3, 0, 3, mazeGrid.length*boxSize);
@@ -78,8 +80,9 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         g.fillRect(0, 0, 3, mazeGrid.length*boxSize);
 
 
-        // Iterate over all cells
+        // If the player wants to see the solution
         if (solution == true) {
+            // Iterate through each cell in the maze
             for (int column = 0; column < mazeGrid.length; column += 1) {
                 for (int row = 0; row < mazeGrid.length; row += 1) {
 
@@ -87,11 +90,13 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
                     int initx = column * boxSize;
                     int inity = row * boxSize;
 
+                    // If the cell is part of the solution, make it pink
                     g.setColor(Color.pink);
                     if (mazeGrid[column][row].Path) {
                         g.fillRect(initx, inity, boxSize, boxSize);
-
                     }
+
+                    // Draw the walls for each cell
                     g.setColor(Color.BLACK);
                     if (mazeGrid[column][row].UpWall) {
                         g.fillRect(initx, inity, boxSize, 2);
@@ -108,14 +113,15 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
                 }
             }
         } else {
+            // Iterate through each cell in the maze
             for (int column = 0; column < mazeGrid.length; column += 1) {
                 for (int row = 0; row < mazeGrid.length; row += 1) {
 
-
-                    // The coordinates of this cell.
+                    // The coordinates of this cell
                     int initx = column * boxSize;
                     int inity = row * boxSize;
 
+                    // Draw the walls for each cell
                     g.setColor(Color.BLACK);
                     if (mazeGrid[column][row].UpWall) {
                         g.fillRect(initx, inity, boxSize, 2);
@@ -129,6 +135,7 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
                     if (mazeGrid[column][row].LeftWall) {
                         g.fillRect(initx, inity, 2, boxSize);
                     }
+                    // If there would've been an enemy in the cell (in 3D), make a blue oval in that cell
                     if(mazeGrid[column][row].enemy){
                         g.setColor(Color.cyan);
                         g.fillOval(initx, inity, boxSize, boxSize);
@@ -136,25 +143,18 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
                 }
             }
         }
+        // Draw the starting and ending square
         g.setColor(Color.BLUE);
         g.fillRect(0, 0, boxSize, boxSize);
         g.fillRect(mazeGrid.length*boxSize - boxSize, mazeGrid.length*boxSize - boxSize, boxSize, boxSize);
+
+        // Draw the player
         g.setColor(Color.RED);
         g.fillRect(xPosition * boxSize + 2, yPosition * boxSize + 2, boxSize - 4, boxSize - 4);
         //g.drawString(Integer.toString(difficulty), mazeGrid.length*boxSize - 2*boxSize, boxSize);
 
     }
 
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
 
     /**
      * This method uses the KeyListener to update the player's position when they press one of the arrow keys
@@ -181,5 +181,15 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         }
         // redraws the maze with the player's position now updated
         repaint();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
     }
 }

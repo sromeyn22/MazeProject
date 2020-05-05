@@ -2,7 +2,7 @@
  * The Leaderboard class generates the GUI for the leaderboard and manages the text files where the leaderboard
  * is stored. There is a separate leaderboard for every size of 3D maze and they are stored in text files in
  * the Leaderboards folder. The leaderboard stores a player's name and their time.
- * (Code for reading and writing to a text file from https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java)
+ * (Code for reading and writing to a text file is based on https://www.codejava.net/java-se/file-io/how-to-read-and-write-text-file-in-java)
  */
 
 import javax.swing.*;
@@ -79,7 +79,7 @@ public class Leaderboard {
 
         JPanel leaderboardPanel = new JPanel();
         /* Initializes the columns and data for the leaderboard that will be stored in a JTable
-           Code for the table from https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#simple */
+           Code for the table based on https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#simple */
         String[] columns = {"Rank", "Name", "Time"};
         Object[][] data = new Object[leaderboard.size()][3];
         for(int i = 0; i < leaderboard.size(); i++){
@@ -151,7 +151,7 @@ public class Leaderboard {
 
         /* Using GridBagConstraints, the frame can be split into multiple panels that each take up a section of the frame.
            Here the frame is divided vertically and each panel is added with their size (weighty) and their position (gridy).
-           Code from https://stackoverflow.com/questions/28425321/java-divide-the-screen */
+           Code based on https://stackoverflow.com/questions/28425321/java-divide-the-screen */
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;

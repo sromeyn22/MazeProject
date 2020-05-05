@@ -249,7 +249,7 @@ public class FrontPageGraphics {
 
 /**
  * A class that stores an image and acts as a JComponent so the main menu can set the background to an image
- * (Code from https://stackoverflow.com/questions/18127581/how-do-i-display-an-image-on-a-frame-using-paintcomponent)
+ * (Class is based on https://stackoverflow.com/questions/18127581/how-do-i-display-an-image-on-a-frame-using-paintcomponent)
  */
 class ImagePanel extends JComponent {
     /**
