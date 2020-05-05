@@ -978,13 +978,13 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             }
             // change which walls should be displayed after you change your position of the direction you are facing
             if(direction == 0){
-                displayWalls = up(displayWalls);
+                up();
             } else if(direction == 1){
-                displayWalls = right(displayWalls);
+                right();
             } else if(direction == 2){
-                displayWalls = down(displayWalls);
+                down();
             } else if(direction == 3){
-                displayWalls = left(displayWalls);
+                left();
             }
             repaint();
             if(xPosition == mazeGrid.length-1 && yPosition == mazeGrid.length-1){
