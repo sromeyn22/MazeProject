@@ -37,7 +37,7 @@ class Cell{
      */
     boolean heart;
     /**
-     *
+     * how much life the heart or enemy has
      */
     int life;
 
