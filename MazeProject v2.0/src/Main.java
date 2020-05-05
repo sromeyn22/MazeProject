@@ -22,7 +22,7 @@ public class Main {
         maze.createMaze();
         // If the user wants a 2d or 3d maze
         if (frontPage.typeOfMaze == 2) {
-            GraphicInterface2D twoD = new GraphicInterface2D(maze.mazeGrid, maze.difficulty);
+            GraphicInterface2D twoD = new GraphicInterface2D(maze.mazeGrid);
             twoD.frame2D.setVisible(true);
         } else if (frontPage.typeOfMaze == 3) {
             // Code used from https://www.techiedelight.com/measure-elapsed-time-execution-time-java/

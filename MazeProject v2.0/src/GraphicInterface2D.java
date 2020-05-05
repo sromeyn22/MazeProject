@@ -28,13 +28,9 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
      */
     int yPosition;
     /**
-     * If the solution is displayed
+     * If the solution should be displayed
      */
     boolean solution;
-    /**
-     * A measure of the difficulty of the maze (the length of the path from the start until the end)
-     */
-    //int difficulty;
     /**
      * The JFrame where the 2D maze is displayed
      */
@@ -43,12 +39,10 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
     /**
      * The default constructor initializes the member fields and the JFrame that displays the maze
      * @param grid the maze represented as a 2D array of cells
-     * @param _difficulty the difficulty of the maze
      */
-    public GraphicInterface2D(Cell[][] grid, int _difficulty) {
+    public GraphicInterface2D(Cell[][] grid) {
         // initialize fields
         mazeGrid = grid;
-        //difficulty = _difficulty;
         boxSize = 20;
         xPosition = 0;
         yPosition = 0;
@@ -151,8 +145,6 @@ public class GraphicInterface2D extends JPanel implements KeyListener {
         // Draw the player
         g.setColor(Color.RED);
         g.fillRect(xPosition * boxSize + 2, yPosition * boxSize + 2, boxSize - 4, boxSize - 4);
-        //g.drawString(Integer.toString(difficulty), mazeGrid.length*boxSize - 2*boxSize, boxSize);
-
     }
 
 

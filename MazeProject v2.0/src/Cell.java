@@ -5,11 +5,11 @@
 
 class Cell{
     /**
-     *
+     * If the cell has been visited while making the maze
      */
     boolean UnVisited;
     /**
-     *
+     * If the cell is part of the path to the solution
      */
     boolean Path;
     /**

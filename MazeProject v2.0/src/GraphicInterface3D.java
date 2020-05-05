@@ -346,7 +346,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     }
 
   /**
-    *Method that determines whether enemy or heart is drawn.
+    * Method that determines whether enemy or heart is drawn.
     * @param Xuse x position of enemy or heart
     * @param Yuse y position of enemy or heart
     * @return int ToReturn determines shading of walls.
@@ -365,12 +365,12 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     }
     
   /**
-    *Method that draws walls of maze.
+    * Method that draws walls of maze.
     * @param g object Graphics g
     */
     private void walls(Graphics g) {
         if(displayWalls[0]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(80, 260, 180, 180);
             if(xPosition == (mazeGrid.length-1) && yPosition == (mazeGrid.length-1)){
                 g.setColor(Color.GREEN);
@@ -393,7 +393,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                     0, 0, 0);
         }
         if(displayWalls[1]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(260, 260, 180, 180);
             if(xPosition == (mazeGrid.length-1) && yPosition == (mazeGrid.length-1)){
                 g.setColor(Color.GREEN);
@@ -416,7 +416,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                     0, 0, 0);
         }
         if(displayWalls[2]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(440, 260, 180, 180);
             if(xPosition == (mazeGrid.length-1) && yPosition == (mazeGrid.length-1)){
                 g.setColor(Color.GREEN);
@@ -439,7 +439,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                     0, 0, 0, 0);
         }
         if(displayWalls[3]){
-            g.setColor(leftWalls());
+            g.setColor(shadingForLeftWalls());
             int[] xPoints = {0, 0, 80, 80};
             int[] yPoints = {233, 467, 440, 260};
             g.fillPolygon(xPoints, yPoints, 4);
@@ -454,20 +454,20 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
             g.fillPolygon(xPoints2, yPoints2, 4);
         }
         if(displayWalls[4]){
-            g.setColor(leftWalls());
+            g.setColor(shadingForLeftWalls());
             int[] xPoints = {200, 200, 260, 260};
             int[] yPoints = {200, 500, 440, 260};
             g.fillPolygon(xPoints, yPoints, 4);
         }
         if(displayWalls[5]){
-            g.setColor(rightWalls());
+            g.setColor(shadingForRightWalls());
             int[] xPoints = {500, 500, 440, 440};
             int[] yPoints = {200, 500, 440, 260};
             g.fillPolygon(xPoints, yPoints, 4);
 
         }
         if(displayWalls[6]){
-            g.setColor(rightWalls());
+            g.setColor(shadingForRightWalls());
             int[] xPoints = {700, 700, 620, 620};
             int[] yPoints = {233, 467, 440, 260};
             g.fillPolygon(xPoints, yPoints, 4);
@@ -483,7 +483,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
 
         }
         if(displayWalls[7]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(0, 200, 200, 300);
 
         }
@@ -497,7 +497,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                     0, 0, 0);
         }
         if(displayWalls[8]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(200, 200, 300, 300);
 
 
@@ -512,7 +512,7 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                     0, 0, 0);
         }
         if(displayWalls[9]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(500, 200, 200, 300);
 
 
@@ -528,25 +528,25 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         
         }
         if(displayWalls[10]){
-            g.setColor(leftWalls());
+            g.setColor(shadingForLeftWalls());
             int[] xPoints = {135, 135, 200, 200};
             int[] yPoints = {135, 565, 500, 200};
             g.fillPolygon(xPoints, yPoints, 4);
         }
         if(displayWalls[11]){
-            g.setColor(rightWalls());
+            g.setColor(shadingForRightWalls());
             int[] xPoints = {565, 565, 500, 500};
             int[] yPoints = {135, 565, 500, 200};
             g.fillPolygon(xPoints, yPoints, 4);
 
         }
         if(displayWalls[12]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(0, 135, 135, 430);
 
         }
         if(displayWalls[13]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(135, 135, 430, 430);
 
         }
@@ -561,46 +561,46 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
                     18, 9, 362);
         }
         if(displayWalls[14]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(565, 135, 135, 430);
 
         }
         if(displayWalls[15]){
-            g.setColor(leftWalls());
+            g.setColor(shadingForLeftWalls());
             int[] xPoints = {65, 65, 135, 135};
             int[] yPoints = {65, 635, 565, 135};
             g.fillPolygon(xPoints, yPoints, 4);
 
         }
         if(displayWalls[16]){
-            g.setColor(rightWalls());
+            g.setColor(shadingForRightWalls());
             int[] xPoints = {635, 635, 565, 565};
             int[] yPoints = {65, 635, 565, 135};
             g.fillPolygon(xPoints, yPoints, 4);
 
         }
         if(displayWalls[17]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(0, 65, 65, 570);
 
         }
         if(displayWalls[18]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(65, 65, 570, 570);
         }
         if(displayWalls[19]){
-            g.setColor(backWalls());
+            g.setColor(shadingForBackWalls());
             g.fillRect(635, 65, 65, 570);
 
         }
         if(displayWalls[20]){
-            g.setColor(leftWalls());
+            g.setColor(shadingForLeftWalls());
             int[] xPoints = {0, 0, 65, 65};
             int[] yPoints = {0, 700, 635, 65};
             g.fillPolygon(xPoints, yPoints, 4);
         }
         if(displayWalls[21]){
-            g.setColor(rightWalls());
+            g.setColor(shadingForRightWalls());
             int[] xPoints = {700, 700, 635, 635};
             int[] yPoints = {0, 700, 635, 65};
             g.fillPolygon(xPoints, yPoints, 4);
@@ -608,10 +608,10 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
     }
     
    /**
-   * Method that determines shading of walls depending on direction.
-   * @return int ToReturn determines shading of walls.
+   * Method that determines shading of the back walls depending on direction.
+   * @return Color ToReturn determines shading of walls.
    */
-    private Color backWalls(){
+    private Color shadingForBackWalls(){
         Color toReturn = new Color(0,0,0);
         Color darkest = new Color(0, 50, 150);
         Color dark = new Color(0, 70, 209);
@@ -629,7 +629,12 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         }
         return toReturn;
     }
-    private Color leftWalls(){
+
+    /**
+     * Method that determines shading of the left walls depending on direction.
+     * @return Color ToReturn determines shading of walls.
+     */
+    private Color shadingForLeftWalls(){
         Color toReturn = new Color(0,0,0);
         Color darkest = new Color(0, 50, 150);
         Color dark = new Color(0, 70, 209);
@@ -648,7 +653,12 @@ public class GraphicInterface3D extends JPanel implements KeyListener {
         return toReturn;
 
     }
-    private Color rightWalls(){
+
+    /**
+     * Method that determines shading of the right walls depending on direction.
+     * @return Color ToReturn determines shading of walls.
+     */
+    private Color shadingForRightWalls(){
         Color toReturn = new Color(0,0,0);
         Color darkest = new Color(0, 50, 150);
         Color dark = new Color(0, 70, 209);

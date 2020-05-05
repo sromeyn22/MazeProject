@@ -1,6 +1,6 @@
 
 
-public class BacktrackerDS extends OrderedCollection{
+public class BacktrackerDS {
     Node end;
     int length;
     public BacktrackerDS(){
@@ -8,7 +8,7 @@ public class BacktrackerDS extends OrderedCollection{
         end = null;
     }
 
-    public void append(Boolean ToAppend, int x, int y){
+    public void append(boolean ToAppend, int x, int y){
         Node toAdd = new Node(ToAppend, x, y);
         toAdd.next = end;
         end = toAdd;
@@ -53,4 +53,3 @@ public class BacktrackerDS extends OrderedCollection{
         }
     }
 }
-

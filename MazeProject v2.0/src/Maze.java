@@ -31,19 +31,19 @@ public class Maze {
      */
     static int dimensions;
     /**
-     *
+     * The x position of the maze generator
      */
     static int xPos;
     /**
-     *
+     * The y position of the maze generator
      */
     static int yPos;
     /**
-     *
+     * The random starting location of the maze generator
      */
     static int xStart;
     /**
-     *
+     * The random y coordinate of the starting location of the maze generator
      */
     static int yStart;
     /**

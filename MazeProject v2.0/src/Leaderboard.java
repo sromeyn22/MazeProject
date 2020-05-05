@@ -23,10 +23,6 @@ public class Leaderboard {
      */
     ArrayList<Player> leaderboard;
     /**
-     * A boolean to keep track if the player submitted their name and time to the leaderboard
-     */
-    boolean submitted;
-    /**
      * A string for the file path to the leaderboard text file given some dimensions
      */
     String leaderboardPath;
@@ -42,7 +38,6 @@ public class Leaderboard {
         // Initialize fields
         this.dimensions = dimensions;
         leaderboard = new ArrayList<Player>();
-        submitted = false;
         leaderboardPath = "Leaderboards/" + dimensions + "Leaderboard.txt";
 
         // If the leaderboard text file for those dimensions doesn't exist, then create a new one
@@ -129,7 +124,6 @@ public class Leaderboard {
                place them in the correct spot depending on their time. Then delete the frame. */
             public void actionPerformed(ActionEvent e) {
                 addPlayer(nameInput.getText(), time);
-                submitted = true;
                 window.dispose();
             }
         });
@@ -140,7 +134,6 @@ public class Leaderboard {
             @Override
             // When the button is pressed, the frame is deleted
             public void actionPerformed(ActionEvent e) {
-                submitted = true;
                 window.dispose();
             }
         });
@@ -264,15 +257,15 @@ public class Leaderboard {
 }
 
 /**
- * The Player class stores one player's name and time and it stored in the leaderboard ArrayList
+ * The Player class stores one player's name and time as one element in the leaderboard ArrayList
  */
 class Player {
     /**
-     * The player's name
+     * The player's submitted name
      */
     String name;
     /**
-     * The player's time
+     * The player's time in milliseconds
      */
     double time;
 
